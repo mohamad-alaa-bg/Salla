@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:salla/core/widgets/navigator.dart';
+import 'package:salla/features/login/presentation/pages/login_page.dart';
 import 'package:salla/features/onBoarding/domain/entities/boarding_item_module.dart';
 import 'package:salla/features/onBoarding/presentation/widgets/Boarding_item.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -24,19 +26,32 @@ class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PageController pageController = PageController();
-
+    bool isLast = false;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          TextButton(
+              onPressed: () {
+                navigateAndReplacementAll(context, const ShopLoginHome());
+              },
+              child: const Text('Skip')),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Expanded(
               child: PageView.builder(
-                physics: const NeverScrollableScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 controller: pageController,
                 itemCount: onBoardingItems.length,
                 itemBuilder: (context, index) {
+                  if (index == onBoardingItems.length - 1) {
+                    isLast = true;
+                  } else {
+                    isLast = false;
+                  }
                   return buildBoardingItem(context, onBoardingItems[index]);
                 },
               ),
@@ -59,10 +74,14 @@ class OnBoarding extends StatelessWidget {
                 const Spacer(),
                 FloatingActionButton(
                   onPressed: () {
-                    pageController.nextPage(
-                      duration: const Duration(milliseconds: 800),
-                      curve: Curves.fastOutSlowIn,
-                    );
+                    if (isLast) {
+                      navigateAndReplacementAll(context, const ShopLoginHome());
+                    } else {
+                      pageController.nextPage(
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.fastOutSlowIn,
+                      );
+                    }
                   },
                   child: const Icon(Icons.arrow_forward_ios_sharp),
                 ),
