@@ -3,11 +3,11 @@ part of 'shop_login_bloc.dart';
 @immutable
 abstract class ShopLoginEvent {}
 
-class ShopUserLogin extends ShopLoginEvent {
+class ShopUserLoginEvent extends ShopLoginEvent {
   final String? email;
   final String? password;
 
-  ShopUserLogin({
+  ShopUserLoginEvent({
     this.email,
     this.password,
   });

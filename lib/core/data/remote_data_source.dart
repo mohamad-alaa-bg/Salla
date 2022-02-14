@@ -10,6 +10,10 @@ class DioHelper {
       BaseOptions(
         baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
+        headers: {
+          'lang' : 'ar',
+          'Content-Type' : 'application/json',
+        }
       ),
     );
   }
@@ -19,8 +23,14 @@ class DioHelper {
     required Map<dynamic, dynamic> data,
     Map<String, dynamic>? query,
   }) async {
-    Response response =
-        await dio!.post(url, data: data, queryParameters: query);
+    Response response = await dio!.post(
+      url,
+      data: data,
+      queryParameters: query,
+
+    );
+    print('alaa');
+    print(response);
     return response;
   }
 }
