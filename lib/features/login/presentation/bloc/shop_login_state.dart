@@ -5,5 +5,9 @@ abstract class ShopLoginState {}
 
 class ShopLoginInitial extends ShopLoginState {}
 class ShopLoginLoadingState extends ShopLoginState{}
-class ShopLoginSucceededState extends ShopLoginState{}
+class ShopLoginSucceededState extends ShopLoginState{
+  final ShopLoginModel loginModel;
+  ShopLoginSucceededState({required this.loginModel});
+}
 class ShopLoginErrorState extends ShopLoginState{}
+class LoginChangedPasswordVisibilityState extends ShopLoginState{}

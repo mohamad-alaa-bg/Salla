@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:salla/core/util/constants.dart';
+import 'package:salla/features/login/data/models/shop_login_model.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
 
 part 'shop_login_event.dart';
@@ -13,23 +14,31 @@ part 'shop_login_state.dart';
 
 class ShopLoginBloc extends Bloc<ShopLoginEvent, ShopLoginState> {
   final ShopLoginRepoImp shopLoginRepoImp;
-
+  bool obscurePassword = true;
+  Widget suffixIcon =   const Icon(Icons.visibility_outlined);
   ShopLoginBloc({required this.shopLoginRepoImp}) : super(ShopLoginInitial()) {
+
     on((event, emit) async {
       if (event is ShopUserLoginEvent) {
         emit(ShopLoginLoadingState());
         try {
-          Response response =
+          ShopLoginModel loginResponse =
               await shopLoginRepoImp.userLogin(url: EndPoints.login, data: {
             'email': event.email,
             'password': event.password,
           });
-          print(response);
-          emit(ShopLoginSucceededState());
+          //print(loginResponse.data!.email);
+          emit(ShopLoginSucceededState(loginModel: loginResponse));
         } catch (error) {
           print(error);
           emit(ShopLoginErrorState());
         }
+      }else if(event is LoginChangePasswordVisibilityEvent){
+        obscurePassword = !obscurePassword;
+        suffixIcon = obscurePassword
+            ? const Icon(Icons.visibility_outlined)
+            : const Icon(Icons.visibility_off_outlined);
+        emit(LoginChangedPasswordVisibilityState());
       }
     });
   }
