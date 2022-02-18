@@ -38,6 +38,7 @@ dependencies:
   dio: ^4.0.4
   flutter_bloc: ^8.0.1
   fluttertoast: ^8.0.8
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   flutter_test:
