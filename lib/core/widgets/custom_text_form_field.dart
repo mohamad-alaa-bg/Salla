@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onSubmitted;
 
 
   // ignore: use_key_in_widget_constructors
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.keyboardType,
     this.validator,
+    this.onSubmitted,
   });
 
   @override
@@ -28,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
+      onFieldSubmitted: onSubmitted,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,

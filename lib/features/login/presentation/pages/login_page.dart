@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:salla/core/widgets/custom_text_form_field.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
 import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
@@ -19,8 +20,6 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
   ShopLoginBloc shopLoginBloc =
       ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp());
 
-
-
   @override
   Widget build(BuildContext context) {
     shopLoginBloc = BlocProvider.of<ShopLoginBloc>(context);
@@ -29,7 +28,32 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: BlocConsumer<ShopLoginBloc, ShopLoginState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is ShopLoginSucceededState) {
+              if (state.loginModel.status) {
+                Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  gravity: ToastGravity.BOTTOM,
+                  toastLength: Toast.LENGTH_LONG,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  timeInSecForIosWeb: 2,
+                  fontSize: 20,
+                );
+              } else {
+                print(state.loginModel.message);
+                Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  gravity: ToastGravity.BOTTOM,
+                  toastLength: Toast.LENGTH_SHORT,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  timeInSecForIosWeb: 5,
+                  fontSize: 20,
+                );
+              }
+            }
+          },
           builder: (context, state) {
             return Column(
               children: [
@@ -80,22 +104,28 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                           CustomTextFormField(
                             textEditingController: passwordController,
                             label: 'Password',
-                            keyboardType: TextInputType.number,
+                            keyboardType: const TextInputType.numberWithOptions(
+                                signed: true, decimal: true),
                             prefixIcon: const Icon(Icons.lock_outline),
                             suffixIcon: IconButton(
                               onPressed: () {
-                                setState(() {
-                                  obscurePassword = !obscurePassword;
-                                });
+                                shopLoginBloc
+                                    .add(LoginChangePasswordVisibilityEvent());
                               },
-                              icon: obscurePassword
-                                  ? const Icon(Icons.visibility_outlined)
-                                  : const Icon(Icons.visibility_off_outlined),
+                              icon: shopLoginBloc.suffixIcon,
                             ),
-                            obscureText: obscurePassword,
+                            obscureText: shopLoginBloc.obscurePassword,
                             validator: (value) {
                               if ((value == null) || (value.isEmpty)) {
                                 return 'Please enter valid password';
+                              }
+                            },
+                            onSubmitted: (value) {
+                              if (loginFormKey.currentState!.validate()) {
+                                print('alaa');
+                                shopLoginBloc.add(ShopUserLoginEvent(
+                                    email: emailController.text,
+                                    password: passwordController.text));
                               }
                             },
                           ),

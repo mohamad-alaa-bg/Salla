@@ -21,15 +21,21 @@ class DioHelper {
   static Future<Response> postData({
     required String url,
     required Map<dynamic, dynamic> data,
+    String lang = 'en',
+    String? token,
     Map<String, dynamic>? query,
+
   }) async {
+    dio?.options.headers = {
+      'lang' : lang,
+      'Authorization' : token,
+    };
     Response response = await dio!.post(
       url,
       data: data,
       queryParameters: query,
 
     );
-    print('alaa');
     print(response);
     return response;
   }
