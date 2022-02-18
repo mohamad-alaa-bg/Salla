@@ -19,7 +19,6 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
   var loginFormKey = GlobalKey<FormState>();
   ShopLoginBloc shopLoginBloc =
       ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp());
-
   @override
   Widget build(BuildContext context) {
     shopLoginBloc = BlocProvider.of<ShopLoginBloc>(context);
@@ -47,7 +46,7 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                   gravity: ToastGravity.BOTTOM,
                   toastLength: Toast.LENGTH_SHORT,
                   backgroundColor: Colors.red,
-                  textColor: Colors.white,
+                  textColor: Colors.black,
                   timeInSecForIosWeb: 5,
                   fontSize: 20,
                 );

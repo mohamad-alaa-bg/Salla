@@ -34,6 +34,8 @@ class OnBoarding extends StatelessWidget {
           TextButton(
               onPressed: () {
                 navigateAndReplacementAll(context, const ShopLoginHome());
+                SharedPreferencesCache.setValue(key: 'onBoarding', value: false);
+
               },
               child: const Text('Skip')),
         ],
