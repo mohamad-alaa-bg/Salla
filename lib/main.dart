@@ -10,33 +10,32 @@ import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
 import 'package:salla/features/onBoarding/presentation/pages/onBoarding.dart';
 
+import 'core/util/constants.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DioHelper.init();
   await SharedPreferencesCache.init();
-  final bool onBoardingState =
-      await SharedPreferencesCache.getValue(key: 'onBoarding');
+
   BlocOverrides.runZoned(
     () {
-      runApp(MyApp(onBoardingState: onBoardingState));
+      runApp(MyApp());
     },
     blocObserver: MyBlocObserver(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key, required this.onBoardingState}) : super(key: key);
-  final bool onBoardingState;
+  MyApp({Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(onBoardingState);
     return BlocProvider(
       create: (context) => ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
-        home: onBoardingState ? OnBoarding() : const ShopLoginHome(),
+        home: UserData.onBoardingState ? OnBoarding() : const ShopLoginHome(),
       ),
     );
   }

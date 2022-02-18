@@ -29,9 +29,9 @@ class SharedPreferencesCache {
           await sharedPreferences?.setString(key, value);
         }
   }
-  static Future<dynamic> getValue({required String key}) async{
+  static dynamic getValue({required String key}) {
     final data =  sharedPreferences?.getBool(key) ;
     print(data);
-    return data??true;
+    return data;
   }
 }
