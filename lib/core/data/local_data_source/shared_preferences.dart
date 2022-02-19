@@ -7,23 +7,27 @@ class SharedPreferencesCache {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static setValue({required String key, required dynamic value}) async {
+  static Future<bool> setValue({required String key, required dynamic value}) async {
     if (value is bool) {
-      await sharedPreferences?.setBool(key, value);
+       return sharedPreferences!.setBool(key, value);
     }
     if (value is int) {
-      await sharedPreferences?.setInt(key, value);
+      return sharedPreferences!.setInt(key, value);
     }
     if (value is double) {
-      await sharedPreferences?.setDouble(key, value);
+      return sharedPreferences!.setDouble(key, value);
     }
-    if (value is String) {
-      await sharedPreferences?.setString(key, value);
+    else {
+      return sharedPreferences!.setString(key, value);
     }
   }
 
   static dynamic getValue({required String key}) {
     final data = sharedPreferences?.get(key);
     return data;
+  }
+
+  static Future<bool> removeValue({required String key}){
+    return sharedPreferences!.remove(key);
   }
 }
