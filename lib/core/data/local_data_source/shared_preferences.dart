@@ -8,30 +8,22 @@ class SharedPreferencesCache {
   }
 
   static setValue({required String key, required dynamic value}) async {
-      if(value is bool)
-        {
-          await sharedPreferences?.setBool(key, value);
-          print(value);
-        }
-      if(value is int)
-
-      {
-          await sharedPreferences?.setInt(key, value);
-        }
-      if(value is double)
-
-      {
-          await sharedPreferences?.setDouble(key, value);
-        }
-      if(value is String)
-
-      {
-          await sharedPreferences?.setString(key, value);
-        }
+    if (value is bool) {
+      await sharedPreferences?.setBool(key, value);
+    }
+    if (value is int) {
+      await sharedPreferences?.setInt(key, value);
+    }
+    if (value is double) {
+      await sharedPreferences?.setDouble(key, value);
+    }
+    if (value is String) {
+      await sharedPreferences?.setString(key, value);
+    }
   }
+
   static dynamic getValue({required String key}) {
-    final data =  sharedPreferences?.getBool(key) ;
-    print(data);
+    final data = sharedPreferences?.get(key);
     return data;
   }
 }
