@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:salla/core/data/local_data_source/shared_preferences.dart';
+import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/custom_text_form_field.dart';
+import 'package:salla/core/widgets/flutter_toast.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
 import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
 
@@ -19,6 +22,14 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
   var loginFormKey = GlobalKey<FormState>();
   ShopLoginBloc shopLoginBloc =
       ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp());
+
+  void login() {
+    if (loginFormKey.currentState!.validate()) {
+      shopLoginBloc.add(ShopUserLoginEvent(
+          email: emailController.text, password: passwordController.text));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     shopLoginBloc = BlocProvider.of<ShopLoginBloc>(context);
@@ -30,26 +41,15 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
           listener: (context, state) {
             if (state is ShopLoginSucceededState) {
               if (state.loginModel.status) {
-                Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  gravity: ToastGravity.BOTTOM,
-                  toastLength: Toast.LENGTH_LONG,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  timeInSecForIosWeb: 2,
-                  fontSize: 20,
-                );
+                showToast(
+                    message: state.loginModel.message,
+                    toastColor: ToastColor.success);
+                SharedPreferencesCache.setValue(
+                    key: 'token', value: state.loginModel.data?.token);
               } else {
-                print(state.loginModel.message);
-                Fluttertoast.showToast(
-                  msg: state.loginModel.message,
-                  gravity: ToastGravity.BOTTOM,
-                  toastLength: Toast.LENGTH_SHORT,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.black,
-                  timeInSecForIosWeb: 5,
-                  fontSize: 20,
-                );
+                showToast(
+                    message: state.loginModel.message,
+                    toastColor: ToastColor.error);
               }
             }
           },
@@ -120,12 +120,7 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                               }
                             },
                             onSubmitted: (value) {
-                              if (loginFormKey.currentState!.validate()) {
-                                print('alaa');
-                                shopLoginBloc.add(ShopUserLoginEvent(
-                                    email: emailController.text,
-                                    password: passwordController.text));
-                              }
+                              login();
                             },
                           ),
                           const SizedBox(
@@ -140,13 +135,7 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                                   )
                                 : ElevatedButton(
                                     onPressed: () {
-                                      if (loginFormKey.currentState!
-                                          .validate()) {
-                                        print('alaa');
-                                        shopLoginBloc.add(ShopUserLoginEvent(
-                                            email: emailController.text,
-                                            password: passwordController.text));
-                                      }
+                                      login();
                                     },
                                     child: const Text('LOGIN'),
                                   ),

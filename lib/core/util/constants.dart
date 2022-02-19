@@ -7,4 +7,7 @@ class EndPoints {
 class UserData {
   static final bool onBoardingState =
       SharedPreferencesCache.getValue(key: 'onBoarding') ?? true;
+  static final String token =
+      SharedPreferencesCache.getValue(key: 'token') ?? '';
+
 }
