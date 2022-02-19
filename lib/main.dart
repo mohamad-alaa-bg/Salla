@@ -5,6 +5,7 @@ import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/data/remote_data_source.dart';
 import 'package:salla/core/style/themes.dart';
 import 'package:salla/core/util/bloc_observe.dart';
+import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
 import 'package:salla/features/home/presentation/pages/home.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
 import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
@@ -30,7 +31,7 @@ void main() async {
     }
   }
   BlocOverrides.runZoned(
-    () {
+        () {
       runApp(
         MyApp(startingWidget: startingWidget),
       );
@@ -45,8 +46,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
+        ),
+        BlocProvider(
+          create: (context) => HomeBloc(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
