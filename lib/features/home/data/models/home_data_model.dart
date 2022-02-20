@@ -11,18 +11,19 @@ class HomeDataModel {
   });
 
   factory HomeDataModel.fromJson({required Map<String, dynamic> data}) {
-    List<BannerModel> alaa;
+    List<dynamic> bannersList = data['banners'];
+    List<dynamic> productsList = data['products'];
+    List<BannerModel> banners = [];
+    List<ProductModel> products = [];
+    for (var element in bannersList) {
+       banners.add(BannerModel.fromJson(banner: element)) ;
+      }
+    for (var element in productsList) {
+       products.add(ProductModel.fromJson(product: element)) ;
+      }
     return HomeDataModel(
-      banners: data['banners'].forEach(
-        (element) {
-          BannerModel.fromJson(banner: element);
-        },
-      ),
-      products: data['product'].forEach(
-        (element) {
-          ProductModel.fromJson(product: element);
-        },
-      ),
+      banners: banners,
+      products: products,
     );
   }
 }

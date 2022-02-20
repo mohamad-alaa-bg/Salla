@@ -1,10 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/data/remote_data_source.dart';
 import 'package:salla/core/style/themes.dart';
 import 'package:salla/core/util/bloc_observe.dart';
+import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
 import 'package:salla/features/home/presentation/pages/home.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
@@ -31,7 +32,7 @@ void main() async {
     }
   }
   BlocOverrides.runZoned(
-        () {
+    () {
       runApp(
         MyApp(startingWidget: startingWidget),
       );
