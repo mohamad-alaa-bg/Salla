@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
               ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
         ),
         BlocProvider(
-          create: (context) => HomeBloc(homePageRepoImp: HomePageRepoImp()),
+          create: (context) => HomeBloc(homePageRepoImp: HomePageRepoImp())..add(GetHomePageDataEvent()),
         ),
       ],
       child: MaterialApp(

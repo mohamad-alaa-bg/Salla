@@ -10,7 +10,7 @@ class BottomNavigatorItemState extends HomeState {}
 class HomePageDataIsLoading extends HomeState {}
 
 class HomePageDataSuccess extends HomeState {
-  final HomeModel homeData;
+  final HomeModel? homeData;
 
   HomePageDataSuccess({required this.homeData});
 }
