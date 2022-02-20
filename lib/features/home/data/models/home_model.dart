@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:salla/features/home/data/models/home_data_model.dart';
 
 class HomeModel {
-  final String status;
+  final bool status;
   final HomeDataModel data;
 
   HomeModel({required this.status, required this.data});

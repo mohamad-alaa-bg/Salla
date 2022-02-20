@@ -1,12 +1,12 @@
 class ProductModel {
   final int id;
-  final int price;
-  final int oldPrice;
+  final dynamic price;
+  final dynamic oldPrice;
   final int discount;
   final String image;
   final String name;
   final String description;
-  final List<String> images;
+  final List<dynamic> images;
   final bool inFavorites;
   final bool inCart;
 
@@ -27,7 +27,7 @@ class ProductModel {
     return ProductModel(
       id: product['id'],
       price: product['price'],
-      oldPrice: product['oldPrice'],
+      oldPrice: product['old_price'],
       discount: product['discount'],
       image: product['image'],
       name: product['name'],
