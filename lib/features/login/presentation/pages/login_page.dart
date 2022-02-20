@@ -6,7 +6,7 @@ import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/custom_text_form_field.dart';
 import 'package:salla/core/widgets/flutter_toast.dart';
 import 'package:salla/core/widgets/navigator.dart';
-import 'package:salla/features/home/presentation/pages/home.dart';
+import 'package:salla/features/home/presentation/pages/home_layout.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
 import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
 
@@ -49,7 +49,7 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                 SharedPreferencesCache.setValue(
                         key: 'token', value: state.loginModel.data?.token)
                     .then((value) =>
-                        navigateAndReplacementAll(context, const Home()));
+                        navigateAndReplacementAll(context, const HomeLayout()));
               } else {
                 showToast(
                     message: state.loginModel.message,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeLayout extends StatelessWidget {
+  const HomeLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
