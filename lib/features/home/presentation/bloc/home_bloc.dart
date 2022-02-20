@@ -2,17 +2,29 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salla/features/home/data/models/home_model.dart';
+import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
 
 part 'home_event.dart';
 
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeInitial()) {
-    on<HomeEvent>((event, emit) {
+  HomePageRepoImp homePageRepoImp;
+  HomeBloc({required this.homePageRepoImp}) : super(HomeInitial()) {
+    on<HomeEvent>((event, emit) async{
       if(event is ChangeBottomBarItemEvent){
         bottomNavigatorIndex = event.index;
         emit(BottomNavigatorItemState());
+      }
+      if(event is GetHomePageDataEvent) {
+        emit(HomePageDataIsLoading());
+        try{
+          HomeModel homeData = await homePageRepoImp.getHomeData();
+          emit(HomePageDataSuccess(homeData: homeData));
+        }catch(error){
+          HomePageDataError();
+        }
       }
       // TODO: implement event handler
     });

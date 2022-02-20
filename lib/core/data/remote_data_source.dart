@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:salla/core/util/constants.dart';
-import 'package:salla/features/home/data/models/home_model.dart';
+
 
 class DioHelper {
   static Dio? dio;
