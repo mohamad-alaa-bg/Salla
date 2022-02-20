@@ -47,7 +47,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
   ];
    List<Widget> bottomNavigatorScreens = const [
-     ProductScreen(),
+     ProductsScreen(),
      Text('2'),
      Text('3'),
      Text('4'),
