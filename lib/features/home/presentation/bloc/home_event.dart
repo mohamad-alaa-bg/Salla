@@ -7,3 +7,5 @@ class ChangeBottomBarItemEvent extends HomeEvent{
   final int index;
   ChangeBottomBarItemEvent({required this.index});
 }
+
+class GetHomePageDataEvent extends HomeEvent{}
