@@ -8,7 +8,7 @@ import 'package:salla/core/util/bloc_observe.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
 import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
-import 'package:salla/features/home/presentation/pages/home.dart';
+import 'package:salla/features/home/presentation/pages/home_layout.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
 import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
@@ -27,7 +27,7 @@ void main() async {
     startingWidget = OnBoarding();
   } else {
     if (UserData.token.isNotEmpty) {
-      startingWidget = const Home();
+      startingWidget = const HomeLayout();
     } else {
       startingWidget = const ShopLoginHome();
     }
