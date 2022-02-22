@@ -14,7 +14,7 @@ class HomeLayout extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(title: const Text('Salla',style: TextStyle(color: Colors.black),),),
           bottomNavigationBar: BottomNavigationBar(
             onTap: (index) {
               bloc.add(ChangeBottomBarItemEvent(index: index));
