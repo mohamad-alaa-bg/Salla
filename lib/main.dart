@@ -5,6 +5,8 @@ import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/data/remote_data_source.dart';
 import 'package:salla/core/style/themes.dart';
 import 'package:salla/core/util/bloc_observe.dart';
+import 'package:salla/features/categories/data/repositories/categories_repo_imp.dart';
+import 'package:salla/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
 import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
@@ -55,7 +57,13 @@ class MyApp extends StatelessWidget {
               ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
         ),
         BlocProvider(
-          create: (context) => HomeBloc(homePageRepoImp: HomePageRepoImp())..add(GetHomePageDataEvent()),
+          create: (context) =>
+              CategoriesBloc(categoriesRepoImp: CategoriesRepoImp())
+                ..add(GetCategoriesEvent()),
+        ),
+        BlocProvider(
+          create: (context) => HomeBloc(homePageRepoImp: HomePageRepoImp())
+            ..add(GetHomePageDataEvent()),
         ),
       ],
       child: MaterialApp(
