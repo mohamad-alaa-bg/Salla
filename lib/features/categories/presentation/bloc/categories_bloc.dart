@@ -17,15 +17,15 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         emit(CategoriesIsLoadingState());
         try{
          categoriesData = await categoriesRepoImp.getCategories();
-         print(categoriesData.status);
-         print(categoriesData.categories.length);
          emit(CategoriesSuccessState(categoriesModel: categoriesData));
-        }catch(error){}
+        }catch(error){
+          emit(CategoriesErrorState());
+        }
       }
       // TODO: implement event handler
     });
   }
 
-  late CategoriesModel categoriesData;
+   CategoriesModel? categoriesData;
   static CategoriesBloc get(context) => BlocProvider.of(context);
 }
