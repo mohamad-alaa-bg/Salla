@@ -14,7 +14,7 @@ Widget productGridView({HomeModel? homeData}) {
           (index) {
         return Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(15),
               border: Border.all(color: Colors.black12)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

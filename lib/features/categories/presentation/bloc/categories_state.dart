@@ -8,7 +8,7 @@ class CategoriesInitial extends CategoriesState {}
 class CategoriesIsLoadingState extends CategoriesState {}
 
 class CategoriesSuccessState extends CategoriesState {
-  final CategoriesModel categoriesModel;
+  final CategoriesModel? categoriesModel;
 
   CategoriesSuccessState({required this.categoriesModel});
 }
