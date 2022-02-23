@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salla/features/categories/presentation/pages/categories_page.dart';
 import 'package:salla/features/home/data/models/home_data_model.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
@@ -45,7 +46,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ];
   List<Widget> bottomNavigatorScreens = const [
     ProductsScreen(),
-    Text('2'),
+    CategoriesScreen(),
     Text('3'),
     Text('4'),
   ];

@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salla/features/categories/presentation/bloc/categories_bloc.dart';
+import 'package:salla/features/categories/presentation/widgets/categories_list_vertical.dart';
 
-class CategoriesPage extends StatelessWidget {
-  const CategoriesPage({Key? key}) : super(key: key);
+class CategoriesScreen extends StatelessWidget {
+  const CategoriesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    var categoriesBloc = CategoriesBloc.get(context);
+    return BlocBuilder<CategoriesBloc, CategoriesState>(
+      builder: (context, state) {
+        return categoriesBloc.categoriesData == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: SizedBox(
+                  width: double.infinity,
+                  child: categoriesListVerticalBuilder(
+                      categoriesData: categoriesBloc.categoriesData),
+                ),
+            );
+      },
+    );
   }
 }
