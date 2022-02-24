@@ -14,3 +14,13 @@ class CategoriesSuccessState extends CategoriesState {
 }
 
 class CategoriesErrorState extends CategoriesState {}
+
+class CategoryDetailsIsLoadingState extends CategoriesState {}
+
+class CategoryDetailsSuccessState extends CategoriesState {
+  final CategoryDetailsModel? categoryDetails;
+
+  CategoryDetailsSuccessState({required this.categoryDetails});
+}
+
+class CategoryDetailsErrorState extends CategoriesState {}

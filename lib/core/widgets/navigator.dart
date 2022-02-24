@@ -9,3 +9,12 @@ void navigateAndReplacementAll(BuildContext context, Widget screen) {
     (route) => false,
   );
 }
+
+void navigateTo(BuildContext context, Widget screen) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => screen,
+    ),
+  );
+}
