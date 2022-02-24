@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
+import 'package:salla/features/home/data/models/product_model.dart';
 
-Widget productGridView({HomeModel? homeData}) {
+Widget productGridView({required List<ProductModel> products,ScrollPhysics? physics}) {
   return GridView.count(
     shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
+    physics: physics??const NeverScrollableScrollPhysics(),
     crossAxisCount: 2,
     crossAxisSpacing: 5,
     mainAxisSpacing: 5,
     childAspectRatio: 1 / 1.5,
     children: List.generate(
-      homeData!.data.products.length,
+      products.length,
           (index) {
         return Container(
           decoration: BoxDecoration(
@@ -26,11 +27,11 @@ Widget productGridView({HomeModel? homeData}) {
                   alignment: AlignmentDirectional.bottomStart,
                   children: [
                     Image(
-                      image: NetworkImage(homeData.data.products[index].image),
+                      image: NetworkImage(products[index].image),
                       height: 250,
                       width: double.infinity,
                     ),
-                    if (homeData.data.products[index].discount > 0)
+                    if (products[index].discount > 0)
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: const Text(
@@ -51,7 +52,7 @@ Widget productGridView({HomeModel? homeData}) {
                     children: [
                   Expanded(
                   child: Text(
-                  homeData.data.products[index].name,
+                  products[index].name,
                     maxLines: 2,
                     overflow: TextOverflow.clip,
                   ),
@@ -67,16 +68,16 @@ Widget productGridView({HomeModel? homeData}) {
                 child: Row(
                   children: [
                     Text(
-                      homeData.data.products[index].price
+                      products[index].price
                           .round()
                           .toString(),
                     ),
                     const SizedBox(
                       width: 5,
                     ),
-                    if (homeData.data.products[index].discount > 0)
+                    if (products[index].discount > 0)
                       Text(
-                        homeData.data.products[index].oldPrice
+                        products[index].oldPrice
                             .round()
                             .toString(),
                         style: const TextStyle(

@@ -46,7 +46,7 @@ class ProductsScreen extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          categoriesListBuilder(
+                          CategoriesListBuilder(
                               categoriesData: categoriesBloc.categoriesData),
                           const SizedBox(
                             height: 20,
@@ -67,7 +67,7 @@ class ProductsScreen extends StatelessWidget {
                     SizedBox(
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: productGridView(homeData: bloc.homeData),
+                        child: productGridView(products: bloc.homeData!.data.products),
                       ),
                     ),
                   ],
