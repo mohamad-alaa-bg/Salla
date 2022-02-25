@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/features/categories/presentation/pages/categories_page.dart';
+import 'package:salla/features/favorites/presentation/pages/FavoriteScreen.dart';
 import 'package:salla/features/home/data/models/favorite_change_state.dart';
 import 'package:salla/features/home/data/models/home_data_model.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
@@ -71,7 +72,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   List<Widget> bottomNavigatorScreens = const [
     ProductsScreen(),
     CategoriesScreen(),
-    Text('3'),
+    FavoritesScreen(),
     Text('4'),
   ];
 }
