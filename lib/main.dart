@@ -34,6 +34,7 @@ void main() async {
       startingWidget = const ShopLoginHome();
     }
   }
+  print(UserData.token);
   BlocOverrides.runZoned(
     () {
       runApp(

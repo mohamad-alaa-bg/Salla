@@ -25,7 +25,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(HomePageDataIsLoading());
         try {
           homeData = await homePageRepoImp.getHomeData();
-
+          for (var e in homeData!.data.products) {
+            favorite.addAll({e.id:e.inFavorites});
+          }
           emit(HomePageDataSuccess(homeData: homeData));
         } catch (error) {
           HomePageDataError();
@@ -34,6 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       // TODO: implement event handler
     });
   }
+  Map<int,bool> favorite={} ;
   HomeModel? homeData ;
   static HomeBloc get(context) => BlocProvider.of(context);
   int bottomNavigatorIndex = 0;
