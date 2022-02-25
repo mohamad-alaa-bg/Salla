@@ -3,8 +3,10 @@ part of 'favorites_bloc.dart';
 @immutable
 abstract class FavoritesEvent {}
 
-class RemoveProductFavorite extends FavoritesEvent {
+class RemoveProductFavoriteEvent extends FavoritesEvent {
   final int id;
 
-  RemoveProductFavorite({required this.id});
+
+  RemoveProductFavoriteEvent({required this.id});
 }
+class GetFavoritesEvent extends FavoritesEvent{}

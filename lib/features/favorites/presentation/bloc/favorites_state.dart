@@ -4,10 +4,13 @@ part of 'favorites_bloc.dart';
 abstract class FavoritesState {}
 
 class FavoritesInitial extends FavoritesState {}
-class FavoritesDeleteSuccess extends FavoritesState{}
-class FavoritesDeleteWarning extends FavoritesState{
+class FavoritesLoadedSuccessState extends FavoritesState{
+}
+class FavoritesLoadedErrorState extends FavoritesState{}
+class FavoriteDeleteSuccessState extends FavoritesState{}
+class FavoriteDeleteWarningState extends FavoritesState{
   final String message;
 
-  FavoritesDeleteWarning({required this.message});
+  FavoriteDeleteWarningState({required this.message});
 }
-class FavoritesDeleteError extends FavoritesState{}
+class FavoriteDeleteErrorState extends FavoritesState{}
