@@ -9,3 +9,9 @@ class ChangeBottomBarItemEvent extends HomeEvent{
 }
 
 class GetHomePageDataEvent extends HomeEvent{}
+
+class ChangeProductFavoriteState extends HomeEvent{
+  final int productId;
+
+  ChangeProductFavoriteState({required this.productId});
+}

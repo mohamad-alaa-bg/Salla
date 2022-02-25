@@ -15,6 +15,14 @@ class HomePageDataSuccess extends HomeState {
   HomePageDataSuccess({required this.homeData});
 }
 
-class HomePageDataError extends HomeState{
+class HomePageDataError extends HomeState {}
+
+
+class FavoriteChangeSuccess extends HomeState{}
+class FavoriteChangeWarning extends HomeState{
+  final String message;
+  FavoriteChangeWarning({required this.message});
 
 }
+class FavoriteChangeError extends HomeState{}
+

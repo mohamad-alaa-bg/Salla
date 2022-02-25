@@ -26,7 +26,7 @@ class CategoryDetails extends StatelessWidget {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : productGridView(
+              : ProductGridView(
                   products: categoriesBloc.categoryDetails!.products,
                   physics: const BouncingScrollPhysics());
         },
