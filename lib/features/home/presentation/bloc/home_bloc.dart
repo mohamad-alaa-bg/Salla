@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/features/categories/presentation/pages/categories_page.dart';
+import 'package:salla/features/home/data/models/favorite_change_state.dart';
 import 'package:salla/features/home/data/models/home_data_model.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
@@ -26,18 +27,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         try {
           homeData = await homePageRepoImp.getHomeData();
           for (var e in homeData!.data.products) {
-            favorite.addAll({e.id:e.inFavorites});
+            favorite.addAll({e.id: e.inFavorites});
           }
           emit(HomePageDataSuccess(homeData: homeData));
         } catch (error) {
           HomePageDataError();
         }
       }
+      if (event is ChangeProductFavoriteState) {
+        favorite[event.productId] =
+            favorite[event.productId] == false ? true : false;
+        emit(FavoriteChangeSuccess());
+        try {
+          FavoriteStateModel favoriteState =
+              await homePageRepoImp.changeProductFavoriteState(event.productId);
+          if (favoriteState.status == false) {
+            favorite[event.productId] =
+                favorite[event.productId] == false ? true : false;
+            emit(FavoriteChangeWarning(message: favoriteState.message));
+          }
+        } catch (error) {
+          print(error);
+          emit(FavoriteChangeError());
+        }
+      }
       // TODO: implement event handler
     });
   }
-  Map<int,bool> favorite={} ;
-  HomeModel? homeData ;
+
+  Map<int, bool> favorite = {};
+
+  HomeModel? homeData;
+
   static HomeBloc get(context) => BlocProvider.of(context);
   int bottomNavigatorIndex = 0;
 

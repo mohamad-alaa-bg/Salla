@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salla/core/util/enum.dart';
+import 'package:salla/core/widgets/flutter_toast.dart';
 import 'package:salla/features/home/data/models/product_model.dart';
 import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
 
@@ -13,8 +15,15 @@ class ProductGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var homeBloc = HomeBloc.get(context);
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {
+        if(state is FavoriteChangeWarning){
+          showToast(message: state.message, toastColor: ToastColor.warning);
+        }
+        },
       builder: (context, state) {
+
+        print('bloc');
         return GridView.count(
           shrinkWrap: true,
           physics: physics ?? const NeverScrollableScrollPhysics(),
@@ -24,7 +33,7 @@ class ProductGridView extends StatelessWidget {
           childAspectRatio: 1 / 1.5,
           children: List.generate(
             products.length,
-            (index) {
+                (index) {
               return Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -46,7 +55,7 @@ class ProductGridView extends StatelessWidget {
                           if (products[index].discount > 0)
                             Container(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
+                              const EdgeInsets.symmetric(horizontal: 5),
                               child: const Text(
                                 'Discount',
                                 style: TextStyle(color: Colors.white),
@@ -72,7 +81,7 @@ class ProductGridView extends StatelessWidget {
                             ),
                             Container(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                              const EdgeInsets.symmetric(horizontal: 10),
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
@@ -99,17 +108,19 @@ class ProductGridView extends StatelessWidget {
                                     ),
                                   const Spacer(),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      homeBloc.add(ChangeProductFavoriteState(productId: products[index].id));
+                                    },
                                     icon:
-                                        homeBloc.favorite[products[index].id] ??
-                                                false
-                                            ? const Icon(
-                                                Icons.favorite,
-                                                color: Colors.red,
-                                              )
-                                            : const Icon(
-                                                Icons.favorite_border,
-                                              ),
+                                    homeBloc.favorite[products[index].id] ??
+                                        false
+                                        ? const Icon(
+                                      Icons.favorite,
+                                      color: Colors.red,
+                                    )
+                                        : const Icon(
+                                      Icons.favorite_border,
+                                    ),
                                     padding: EdgeInsets.zero,
                                   ),
                                 ],
