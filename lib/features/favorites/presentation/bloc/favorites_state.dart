@@ -14,3 +14,13 @@ class FavoriteDeleteWarningState extends FavoritesState{
   FavoriteDeleteWarningState({required this.message});
 }
 class FavoriteDeleteErrorState extends FavoritesState{}
+
+class FavoriteChangeSuccess extends FavoritesState{}
+class FavoriteChangeWarning extends FavoritesState{
+  final String message;
+  FavoriteChangeWarning({required this.message});
+
+}
+class FavoriteChangeError extends FavoritesState{}
+
+
