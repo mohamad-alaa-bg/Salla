@@ -17,7 +17,10 @@ class FavoritesScreen extends StatelessWidget {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : ProductGridView(products: favoritesBloc.favoritesProduceList??[]);
+            : Padding(
+              padding: const EdgeInsets.all(20),
+              child: ProductGridView(products: favoritesBloc.favoritesProduceList??[],physics: const BouncingScrollPhysics(),),
+            );
       },
     );
   }

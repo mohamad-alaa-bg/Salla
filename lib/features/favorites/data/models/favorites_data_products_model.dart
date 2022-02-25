@@ -27,10 +27,9 @@ class FavoritesProductsModel extends ProductModel {
             image: '',
             images: [],
             inCart: false,
-            inFavorites: false);
+            inFavorites: true);
 
   factory FavoritesProductsModel.fromJson(Map<String, dynamic> product) {
-    print(product['product']);
     return FavoritesProductsModel(
       id: product['product']['id'],
       name: product['product']['name'],
