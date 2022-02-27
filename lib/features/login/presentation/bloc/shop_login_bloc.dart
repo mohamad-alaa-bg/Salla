@@ -28,8 +28,11 @@ class ShopLoginBloc extends Bloc<ShopLoginEvent, ShopLoginState> {
             'email': event.email,
             'password': event.password,
           });
-          SharedPreferencesCache.setValue(key: 'token', value: loginResponse.data?.token);
-          UserData.token = SharedPreferencesCache.getValue(key: 'token');
+          if(loginResponse.data?.token !=null){
+            SharedPreferencesCache.setValue(key: 'token', value: loginResponse.data?.token);
+            UserData.token = SharedPreferencesCache.getValue(key: 'token');
+          }
+
           //print(loginResponse.data!.email);
           emit(ShopLoginSucceededState(loginModel: loginResponse));
         } catch (error) {
