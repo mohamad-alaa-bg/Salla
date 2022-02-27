@@ -5,6 +5,7 @@ class EndPoints {
   static const home = 'home';
   static const categories = 'categories';
   static const favorite = 'favorites';
+  static const profile = 'profile';
 }
 
 class UserData {
