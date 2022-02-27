@@ -25,84 +25,78 @@ class SettingsScreen extends StatelessWidget {
               'Settings',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
-            SizedBox(height: 5,),
-            Text('Account Information',style: TextStyle(fontSize: 14),),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              'Account Information',
+              style: TextStyle(fontSize: 14),
+            ),
           ],
         ),
         backgroundColor: Colors.white,
         titleTextStyle: const TextStyle(color: Colors.black87),
-      ),
-      body: Stack(
-        children: [
-          Container(
-            color: Colors.white,
-            height: 40,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
 
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-
-                        ),
-                      ),
-                      TextButton(
-                        style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all(
-                                Colors.red.withOpacity(0.1))),
-                        onPressed: () {
-                          SharedPreferencesCache.removeValue(key: 'token');
-                          navigateAndReplacementAll(context, const ShopLoginHome());
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.logout,
-                              color: Colors.redAccent,
-                              size: 30,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'LogOut',
-                              style: TextStyle(color: Colors.redAccent, fontSize: 19),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+        actions: [
+          IconButton(
+            padding: const EdgeInsets.only(right: 10),
+              onPressed: () {
+                SharedPreferencesCache.removeValue(key: 'token');
+                navigateAndReplacementAll(context, const ShopLoginHome());
+              },
+              icon: const Icon(Icons.logout),iconSize: 30,)
         ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 8,
+              child: Container(
+                // decoration: BoxDecoration(
+                //   border: Border.all(color: Colors.grey),
+                //   borderRadius: BorderRadius.circular(20),
+                //   color: Colors.white,
+                // ),
+              ),
+            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // Expanded(
+            //   child: TextButton(
+            //     style: ButtonStyle(
+            //         overlayColor: MaterialStateProperty.all(
+            //             Colors.red.withOpacity(0.1))),
+            //     onPressed: () {
+            //       SharedPreferencesCache.removeValue(key: 'token');
+            //       navigateAndReplacementAll(
+            //           context, const ShopLoginHome());
+            //     },
+            //     child: Row(
+            //       mainAxisSize: MainAxisSize.min,
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: const [
+            //         Icon(
+            //           Icons.logout,
+            //           color: Colors.redAccent,
+            //           size: 30,
+            //         ),
+            //         SizedBox(
+            //           width: 10,
+            //         ),
+            //         Text(
+            //           'LogOut',
+            //           style: TextStyle(
+            //               color: Colors.redAccent, fontSize: 19),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }
