@@ -11,6 +11,7 @@ import 'package:salla/features/home/data/models/home_data_model.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
 import 'package:salla/features/home/presentation/pages/product_Screen.dart';
+import 'package:salla/features/settings/presentation/pages/settings_layout.dart';
 
 part 'home_event.dart';
 
@@ -57,6 +58,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ProductsScreen(),
     CategoriesScreen(),
     FavoritesScreen(),
-    Text('4'),
+    SettingsScreen(),
   ];
 }
