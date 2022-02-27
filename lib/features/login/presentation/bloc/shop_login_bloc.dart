@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/util/constants.dart';
 import 'package:salla/features/login/data/models/shop_login_model.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
@@ -27,6 +28,8 @@ class ShopLoginBloc extends Bloc<ShopLoginEvent, ShopLoginState> {
             'email': event.email,
             'password': event.password,
           });
+          SharedPreferencesCache.setValue(key: 'token', value: loginResponse.data?.token);
+          UserData.token = SharedPreferencesCache.getValue(key: 'token');
           //print(loginResponse.data!.email);
           emit(ShopLoginSucceededState(loginModel: loginResponse));
         } catch (error) {

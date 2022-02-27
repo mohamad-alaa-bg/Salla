@@ -15,13 +15,15 @@ class CategoriesScreen extends StatelessWidget {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : const Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 10),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: CategoriesListVerticalBuilder(),
+            : const SafeArea(
+              child:  Padding(
+                  padding:  EdgeInsets.all(10),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: CategoriesListVerticalBuilder(),
+                  ),
                 ),
-              );
+            );
       },
     );
   }
