@@ -3,3 +3,8 @@ enum ToastColor {
   error,
   warning,
 }
+
+enum ThemeModeSetting {
+  dark,
+  light,
+}
