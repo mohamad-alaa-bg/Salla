@@ -14,66 +14,68 @@ class ProductsScreen extends StatelessWidget {
     var categoriesBloc = CategoriesBloc.get(context);
     var bloc = HomeBloc.get(context);
     int indexC = 0;
-    return BlocBuilder<HomeBloc, HomeState>(
-      buildWhen: (previous, current) => current is HomePageDataSuccess,
-      builder: (context, state) {
-        return (bloc.homeData == null) && (categoriesBloc.categoriesData == null)
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CarouselSliderBuilder(homeDate: bloc.homeData),
-                    const SizedBox(
-                      height: 10,
-                    ),
+    return SafeArea(
+      child: BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (previous, current) => current is HomePageDataSuccess,
+        builder: (context, state) {
+          return (bloc.homeData == null) && (categoriesBloc.categoriesData == null)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CarouselSliderBuilder(homeDate: bloc.homeData),
+                      const SizedBox(
+                        height: 10,
+                      ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Categories',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Categories',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          CategoriesListBuilder(
-                              categoriesData: categoriesBloc.categoriesData),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Text(
-                            'New Products',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                            const SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                            CategoriesListBuilder(
+                                categoriesData: categoriesBloc.categoriesData),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Text(
+                              'New Products',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: ProductGridView(products: bloc.homeData!.data.products),
+                      SizedBox(
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ProductGridView(products: bloc.homeData!.data.products),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-      },
+                    ],
+                  ),
+                );
+        },
+      ),
     );
   }
 }
