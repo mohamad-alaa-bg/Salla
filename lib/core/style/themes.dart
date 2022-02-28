@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ThemeData lightTheme = ThemeData(
+
   primaryColor: Colors.blue,
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedItemColor: Colors.blue,
@@ -9,6 +10,7 @@ ThemeData lightTheme = ThemeData(
     showUnselectedLabels: true,
     type: BottomNavigationBarType.fixed,
   ),
+
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,

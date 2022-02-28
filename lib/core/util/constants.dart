@@ -19,4 +19,9 @@ class UserData {
               (SharedPreferencesCache.getValue(key: 'mode') == false)
           ? ThemeModeSetting.light
           : ThemeModeSetting.dark;
+
+  static Language language = (SharedPreferencesCache.getValue(key: 'lang') == null) ||
+      (SharedPreferencesCache.getValue(key: 'lang') == 'en')
+      ? Language.english
+      : Language.arabic;
 }
