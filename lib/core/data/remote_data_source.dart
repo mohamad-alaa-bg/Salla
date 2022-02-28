@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:salla/core/util/constants.dart';
+import 'package:salla/core/util/enum.dart';
 
 
 class DioHelper {
@@ -17,7 +19,7 @@ class DioHelper {
       {required String url, String lang = 'en', String? token}) async {
     dio?.options.headers = {
       'Content-Type': 'application/json',
-      'lang': lang,
+      'lang': UserData.language == Language.english ? 'en':'ar',
       'Authorization': token??'',
     };
     Response response = await dio!.get(
@@ -35,7 +37,7 @@ class DioHelper {
   }) async {
     dio?.options.headers = {
       'Content-Type': 'application/json',
-      'lang': lang,
+      'lang': UserData.language == Language.english ? 'en':'ar',
       'Authorization': token??'',
     };
     Response response = await dio!.post(

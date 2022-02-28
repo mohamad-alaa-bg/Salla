@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/util/constants.dart';
 import 'package:salla/core/util/enum.dart';
+import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/settings/data/models/settings_model.dart';
 import 'package:salla/features/settings/data/repositories/settings_repo_imp.dart';
 
@@ -46,6 +47,24 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           emit(ChangeModeSuccessState());
         } catch (error) {
           emit(ChangeModeErrorState());
+        }
+      }
+      if (event is ChangeLanguageEvent) {
+        try {
+          emit(ChangeLanguageIsLoadingState());
+          print(event.value);
+
+          await SharedPreferencesCache.setValue(key: 'lang', value: event.value)
+              .then((value) {
+            UserData.language =
+            (SharedPreferencesCache.getValue(key: 'lang') == null) ||
+                (SharedPreferencesCache.getValue(key: 'lang') == 'en')
+                ? Language.english
+                : Language.arabic;
+          }).then((value) => print(UserData.language.toString()));
+          emit(ChangeLanguageSuccessState());
+        } catch (error) {
+          emit(ChangeLanguageErrorState());
         }
       }
       // TODO: implement event handler

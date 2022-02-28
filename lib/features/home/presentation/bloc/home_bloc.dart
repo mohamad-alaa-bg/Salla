@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/core/data/local_data_source/shared_preferences.dart';
+import 'package:salla/core/util/constants.dart';
+import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/categories/presentation/pages/categories_page.dart';
 import 'package:salla/features/favorites/presentation/pages/FavoriteScreen.dart';
@@ -27,8 +29,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(HomePageDataIsLoading());
         try {
           homeData = await homePageRepoImp.getHomeData();
-          for (var e in homeData!.data.products) {
-          }
+          for (var e in homeData!.data.products) {}
           emit(HomePageDataSuccess(homeData: homeData));
         } catch (error) {
           HomePageDataError();
@@ -44,53 +45,65 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   static HomeBloc get(context) => BlocProvider.of(context);
   int bottomNavigatorIndex = 0;
 
-  AppBar getAppBar(BuildContext context , int index){
-    List<AppBar> appBar = [AppBar(),AppBar(),AppBar(),AppBar(
-      elevation: 0,
-      toolbarHeight: 100,
-      centerTitle: false,
-      // systemOverlayStyle: const SystemUiOverlayStyle().copyWith(statusBarColor: Colors.blueAccent),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:  const [
-          Text(
-            'Settings',
+  AppBar getAppBar(BuildContext context, int index) {
+    List<AppBar> appBar = [
+      AppBar(),
+      AppBar(),
+      AppBar(),
+      AppBar(
+        elevation: 0,
+        toolbarHeight: 100,
+        centerTitle: false,
+        // systemOverlayStyle: const SystemUiOverlayStyle().copyWith(statusBarColor: Colors.blueAccent),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:  [
+          UserData.language == Language.english ? const Text('Settings') : const Text('الاعدادات'),
+            const SizedBox(
+              height: 5,
+            ),
+            UserData.language == Language.english ? const Text('Account Information') : const Text('معلومات الحساب'),
+
+          ],
+        ),
+
+        actions: [
+          IconButton(
+            padding: const EdgeInsets.only(right: 10),
+            onPressed: () {},
+            icon: const Icon(Icons.edit),
+            iconSize: 30,
           ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            'Account Information',
-            style: TextStyle(fontSize: 14),
+          IconButton(
+            padding: const EdgeInsets.only(right: 10),
+            onPressed: () {
+              SharedPreferencesCache.removeValue(key: 'token');
+              navigateAndReplacementAll(context, const ShopLoginHome());
+            },
+            icon: const Icon(Icons.logout),
+            iconSize: 30,
           ),
         ],
-      ),
-
-      actions: [
-        IconButton(
-          padding: const EdgeInsets.only(right: 10),
-          onPressed: () {},
-          icon: const Icon(Icons.edit),
-          iconSize: 30,
-        ),
-        IconButton(
-          padding: const EdgeInsets.only(right: 10),
-          onPressed: () {
-            SharedPreferencesCache.removeValue(key: 'token');
-            navigateAndReplacementAll(context, const ShopLoginHome());
-          },
-          icon: const Icon(Icons.logout),
-          iconSize: 30,
-        ),
-      ],
-    )];
+      )
+    ];
     return appBar[index];
   }
-  List<BottomNavigationBarItem> bottomNavigatorItems = const [
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-    BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: 'Categories'),
-    BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
-    BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+
+  List<BottomNavigationBarItem> bottomNavigatorItems = [
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.home),
+        label: UserData.language == Language.english ? 'Home' : 'الرئيسية'),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.grid_view),
+        label:
+            UserData.language == Language.english ? 'Categories' : 'التصنيفات'),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.favorite),
+        label: UserData.language == Language.english ? 'Favorites' : 'المفضلة'),
+    BottomNavigationBarItem(
+        icon: const Icon(Icons.settings),
+        label:
+            UserData.language == Language.english ? 'Settings' : 'الاعدادات'),
   ];
   List<Widget> bottomNavigatorScreens = const [
     ProductsScreen(),
