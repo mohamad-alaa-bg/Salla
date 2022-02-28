@@ -68,12 +68,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
 
         actions: [
-          IconButton(
-            padding: const EdgeInsets.only(right: 10),
-            onPressed: () {},
-            icon: const Icon(Icons.edit),
-            iconSize: 30,
-          ),
+
           IconButton(
             padding: const EdgeInsets.only(right: 10),
             onPressed: () {

@@ -60,7 +60,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         }
       },
       builder: (context, state) {
-
         if (settingBloc.settings?.data != null) {
           nameController.text = settingBloc.settings!.data!.name;
           emailController.text = settingBloc.settings!.data!.email;
@@ -71,7 +70,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: CircularProgressIndicator(),
               )
             : Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 40),
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
@@ -142,7 +141,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -192,6 +191,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ],
                         ),
                       ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                                child: ElevatedButton(
+                              child: const Text('Update'),
+                              onPressed: () {},
+                            )),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Expanded(
+                                child: ElevatedButton(
+                              child: const Text('LogOut'),
+                              onPressed: () {},
+                              style:  ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(Colors.red)),
+                            )),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
