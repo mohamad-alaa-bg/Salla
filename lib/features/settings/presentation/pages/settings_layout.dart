@@ -13,8 +13,19 @@ import 'package:salla/features/onBoarding/presentation/pages/onBoarding.dart';
 import 'package:salla/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:salla/main.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  @override
+  void initState() {
+    SettingsBloc.get(context).add(GetSettingsEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

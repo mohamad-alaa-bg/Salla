@@ -8,10 +8,9 @@ class SettingsModel extends ShopLoginModel {
   final String message;
   final bool status;
   final LoginData? data;
-  final ThemeModeSetting mode ;
-  final String lang ;
 
-  SettingsModel({required this.message, required this.status, this.data,this.lang = 'ar',this.mode = ThemeModeSetting.light})
+
+  SettingsModel({required this.message, required this.status, this.data,})
       : super(message: message, status: status, data: data);
 
   factory SettingsModel.fromJson(Response response){
