@@ -70,7 +70,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: CircularProgressIndicator(),
               )
             : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 40),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
@@ -198,20 +199,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
-                                child: ElevatedButton(
-                              child: const Text('Update'),
-                              onPressed: () {},
-                            )),
+                              child: ElevatedButton(
+
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:  [
+                                    const Icon(Icons.update),
+                                     const SizedBox(width: 10,),
+                                    UserData.language == Language.english
+                                        ? const Text('Update')
+                                        : const Text('حفظ التعديلات'),
+
+                                  ],
+                                ),
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStateProperty.all(Colors.green),
+                                ),
+                              ),
+                            ),
                             const SizedBox(
                               width: 30,
                             ),
                             Expanded(
-                                child: ElevatedButton(
-                              child: const Text('LogOut'),
-                              onPressed: () {},
-                              style:  ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(Colors.red)),
-                            )),
+                              child: ElevatedButton(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:  [
+                                    const Icon(Icons.logout),
+                                    const SizedBox(width: 10,),
+                                    UserData.language == Language.english
+                                        ? const Text('Logout')
+                                        : const Text('تسجيل الخروج'),
+
+                                  ],
+                                ),
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.red),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )
