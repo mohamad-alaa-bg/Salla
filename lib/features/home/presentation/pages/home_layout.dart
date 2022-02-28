@@ -17,22 +17,19 @@ class HomeLayout extends StatelessWidget {
             // TODO: implement listener
           },
           builder: (context, state) {
-            return Scaffold(
-              appBar: bloc.getAppBar(context, bloc.bottomNavigatorIndex),
-              // appBar: AppBar(
-              //   title: const Text(
-              //     'Salla',
-              //     style: TextStyle(color: Colors.black),
-              //   ),
-              // ),
-              bottomNavigationBar: BottomNavigationBar(
-                onTap: (index) {
-                  bloc.add(ChangeBottomBarItemEvent(index: index));
-                },
-                currentIndex: bloc.bottomNavigatorIndex,
-                items: bloc.bottomNavigatorItems,
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: Scaffold(
+                appBar: bloc.getAppBar(context, bloc.bottomNavigatorIndex),
+                bottomNavigationBar: BottomNavigationBar(
+                  onTap: (index) {
+                    bloc.add(ChangeBottomBarItemEvent(index: index));
+                  },
+                  currentIndex: bloc.bottomNavigatorIndex,
+                  items: bloc.bottomNavigatorItems,
+                ),
+                body: bloc.bottomNavigatorScreens[bloc.bottomNavigatorIndex],
               ),
-              body: bloc.bottomNavigatorScreens[bloc.bottomNavigatorIndex],
             );
           },
         );

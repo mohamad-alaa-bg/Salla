@@ -8,3 +8,8 @@ enum ThemeModeSetting {
   dark,
   light,
 }
+
+enum Language {
+  arabic,
+  english,
+}

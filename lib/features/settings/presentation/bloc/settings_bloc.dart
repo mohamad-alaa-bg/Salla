@@ -34,21 +34,20 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           emit(ChangeModeIsLoadingState());
           print(event.value);
 
-          await SharedPreferencesCache.setValue(key: 'mode', value: event.value).then(
-                  (value) {
-                    UserData.themeMode =
-                    (SharedPreferencesCache.getValue(key: 'mode') == null) ||
+          await SharedPreferencesCache.setValue(key: 'mode', value: event.value)
+              .then((value) {
+            UserData.themeMode =
+                (SharedPreferencesCache.getValue(key: 'mode') == null) ||
                         (SharedPreferencesCache.getValue(key: 'mode') == false)
-                        ? ThemeModeSetting.light
-                        : ThemeModeSetting.dark;
+                    ? ThemeModeSetting.light
+                    : ThemeModeSetting.dark;
+          }).then((value) => print(UserData.themeMode.toString()));
 
-              }).then((value) => print(UserData.themeMode.toString()));
-
-      emit(ChangeModeSuccessState());
-      } catch (error) {
-      emit(ChangeModeErrorState());
+          emit(ChangeModeSuccessState());
+        } catch (error) {
+          emit(ChangeModeErrorState());
+        }
       }
-    }
       // TODO: implement event handler
     });
   }
