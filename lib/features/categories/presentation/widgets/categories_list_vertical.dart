@@ -25,6 +25,7 @@ class CategoriesListVerticalBuilder extends StatelessWidget {
     return BlocBuilder<CategoriesBloc, CategoriesState>(
       builder: (context, state) {
         return ListView.separated(
+          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,
           itemCount: categoriesBloc.categoriesData!.categories.length,
           itemBuilder: (context, index) {

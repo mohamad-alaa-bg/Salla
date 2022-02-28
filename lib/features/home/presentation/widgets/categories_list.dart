@@ -26,8 +26,9 @@ class CategoriesListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     var categoriesBloc = CategoriesBloc.get(context);
     return SizedBox(
-      height: 148,
+      height: 160,
       child: ListView.separated(
+        physics:const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => InkWell(
             onTap: (){

@@ -41,9 +41,13 @@ void main() async {
   }
   print(UserData.token);
   BlocOverrides.runZoned(
-        () {
+    () {
       runApp(
-        MyApp(startingWidget: startingWidget),
+        BlocProvider(
+          create: (context) => SettingsBloc(settingsRepoImp: SettingsRepoImp())
+            ..add(GetSettingsEvent()),
+          child: MyApp(startingWidget: startingWidget),
+        ),
       );
     },
     blocObserver: MyBlocObserver(),
@@ -60,35 +64,35 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-          SettingsBloc(settingsRepoImp: SettingsRepoImp())
-            ..add(GetSettingsEvent()),
-        ),
-        BlocProvider(
-          create: (context) =>
               ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
         ),
         BlocProvider(
           create: (context) =>
-          CategoriesBloc(categoriesRepoImp: CategoriesRepoImp())
-            ..add(GetCategoriesEvent()),
+              CategoriesBloc(categoriesRepoImp: CategoriesRepoImp())
+                ..add(GetCategoriesEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-          HomeBloc(homePageRepoImp: HomePageRepoImp())
+          create: (context) => HomeBloc(homePageRepoImp: HomePageRepoImp())
             ..add(GetHomePageDataEvent()),
         ),
         BlocProvider(
           create: (context) =>
-          FavoritesBloc(favoritesRepoImp: FavoritesRepoImp())
-            ..add(GetFavoritesEvent()),
+              FavoritesBloc(favoritesRepoImp: FavoritesRepoImp())
+                ..add(GetFavoritesEvent()),
         ),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: UserData.themeMode == ThemeModeSetting.light ? lightTheme : darkTheme,
-            home: startingWidget,
+            theme: UserData.themeMode == ThemeModeSetting.light
+                ? lightTheme
+                : darkTheme,
+            home: Directionality(
+                textDirection: UserData.language == Language.english
+                    ? TextDirection.ltr
+                    : TextDirection.rtl,
+                child: startingWidget),
           );
         },
       ),

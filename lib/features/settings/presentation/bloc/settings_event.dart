@@ -10,3 +10,8 @@ class ChangeThemeModeEvent extends SettingsEvent {
 
   ChangeThemeModeEvent({required this.value});
 }
+class ChangeLanguageEvent extends SettingsEvent {
+  final String value;
+
+  ChangeLanguageEvent({required this.value});
+}

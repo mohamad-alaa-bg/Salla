@@ -12,6 +12,13 @@ class SettingsLoadedState extends SettingsState {}
 class SettingsErrorState extends SettingsState {}
 
 class ChangeModeIsLoadingState extends SettingsState {}
+
 class ChangeModeSuccessState extends SettingsState {}
 
 class ChangeModeErrorState extends SettingsState {}
+
+class ChangeLanguageIsLoadingState extends SettingsState {}
+
+class ChangeLanguageSuccessState extends SettingsState {}
+
+class ChangeLanguageErrorState extends SettingsState {}
