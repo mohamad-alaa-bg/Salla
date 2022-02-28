@@ -18,6 +18,7 @@ class HomeLayout extends StatelessWidget {
           },
           builder: (context, state) {
             return Scaffold(
+              appBar: bloc.getAppBar(context, bloc.bottomNavigatorIndex),
               // appBar: AppBar(
               //   title: const Text(
               //     'Salla',

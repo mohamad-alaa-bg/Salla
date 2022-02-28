@@ -34,9 +34,9 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
-        label: Text(label),
+        label: Text(label,style: Theme.of(context).textTheme.bodyText2,),
         border: const OutlineInputBorder(),
-
+        counterStyle: Theme.of(context).textTheme.bodyText2,
       ),
     );
   }

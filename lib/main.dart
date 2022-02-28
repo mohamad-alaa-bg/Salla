@@ -5,6 +5,7 @@ import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/data/remote_data_source.dart';
 import 'package:salla/core/style/themes.dart';
 import 'package:salla/core/util/bloc_observe.dart';
+import 'package:salla/core/util/enum.dart';
 import 'package:salla/features/categories/data/repositories/categories_repo_imp.dart';
 import 'package:salla/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:salla/features/favorites/data/repositories/favorites_repo_impl.dart';
@@ -40,7 +41,7 @@ void main() async {
   }
   print(UserData.token);
   BlocOverrides.runZoned(
-    () {
+        () {
       runApp(
         MyApp(startingWidget: startingWidget),
       );
@@ -58,7 +59,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SettingsBloc(settingsRepoImp: SettingsRepoImp())
+          create: (context) =>
+          SettingsBloc(settingsRepoImp: SettingsRepoImp())
             ..add(GetSettingsEvent()),
         ),
         BlocProvider(
@@ -67,23 +69,28 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) =>
-              CategoriesBloc(categoriesRepoImp: CategoriesRepoImp())
-                ..add(GetCategoriesEvent()),
+          CategoriesBloc(categoriesRepoImp: CategoriesRepoImp())
+            ..add(GetCategoriesEvent()),
         ),
         BlocProvider(
-          create: (context) => HomeBloc(homePageRepoImp: HomePageRepoImp())
+          create: (context) =>
+          HomeBloc(homePageRepoImp: HomePageRepoImp())
             ..add(GetHomePageDataEvent()),
         ),
         BlocProvider(
           create: (context) =>
-              FavoritesBloc(favoritesRepoImp: FavoritesRepoImp())
-                ..add(GetFavoritesEvent()),
+          FavoritesBloc(favoritesRepoImp: FavoritesRepoImp())
+            ..add(GetFavoritesEvent()),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme,
-        home: startingWidget,
+      child: BlocBuilder<SettingsBloc, SettingsState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: UserData.themeMode == ThemeModeSetting.light ? lightTheme : darkTheme,
+            home: startingWidget,
+          );
+        },
       ),
     );
   }
