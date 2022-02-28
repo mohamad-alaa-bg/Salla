@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:salla/core/util/constants.dart';
+import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/categories/data/models/categories_model.dart';
 import 'package:salla/features/categories/presentation/bloc/categories_bloc.dart';
@@ -34,17 +36,20 @@ class CategoriesListBuilder extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black12)),
+                      border: Border.all(color: UserData.themeMode == ThemeModeSetting.light ?Colors.black12:Colors.white)),
                   child: Column(
                     // alignment: AlignmentDirectional.bottomStart,
 
                     children: [
-                      Image(
-                        image: NetworkImage(
-                            categoriesData!.categories[index].image),
-                        width: 125,
-                        height: 125,
-                        fit: BoxFit.contain,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5,left: 5,right: 5,bottom: 1),
+                        child: Image(
+                          image: NetworkImage(
+                              categoriesData!.categories[index].image),
+                          width: 120,
+                          height: 120,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(

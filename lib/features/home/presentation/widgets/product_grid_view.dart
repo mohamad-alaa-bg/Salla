@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salla/core/util/constants.dart';
 import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/flutter_toast.dart';
 import 'package:salla/features/favorites/presentation/bloc/favorites_bloc.dart';
@@ -38,7 +39,10 @@ class ProductGridView extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.black12)),
+                    border: Border.all(
+                        color: UserData.themeMode == ThemeModeSetting.light
+                            ? Colors.black12
+                            : Colors.white)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,6 +56,7 @@ class ProductGridView extends StatelessWidget {
                             image: NetworkImage(products[index].image),
                             height: 250,
                             width: double.infinity,
+                            fit: BoxFit.contain,
                           ),
                           if (products[index].discount > 0)
                             Container(
@@ -86,7 +91,10 @@ class ProductGridView extends StatelessWidget {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
-                                color: Colors.grey.withOpacity(0.1),
+                                color:
+                                    UserData.themeMode == ThemeModeSetting.light
+                                        ? Colors.grey.withOpacity(0.1)
+                                        : Colors.grey.withOpacity(0.5),
                               ),
                               child: Row(
                                 children: [

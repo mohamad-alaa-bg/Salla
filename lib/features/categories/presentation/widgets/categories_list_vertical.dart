@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salla/core/util/constants.dart';
+import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:salla/features/categories/presentation/pages/category_details.dart';
@@ -25,8 +27,7 @@ class CategoriesListVerticalBuilder extends StatelessWidget {
         return ListView.separated(
           scrollDirection: Axis.vertical,
           itemCount: categoriesBloc.categoriesData!.categories.length,
-          itemBuilder: (context, index){
-
+          itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
                 getCategoryDetails(
@@ -37,17 +38,23 @@ class CategoriesListVerticalBuilder extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.black12)),
-                height: 120,
+                    border: Border.all(
+                        color: UserData.themeMode == ThemeModeSetting.light
+                            ? Colors.black12
+                            : Colors.white)),
+                height: 140,
                 width: double.infinity,
                 child: Row(
                   children: [
-                    Image(
-                      image: NetworkImage(categoriesBloc
-                          .categoriesData!.categories[index].image),
-                      fit: BoxFit.contain,
-                      width: 120,
-                      height: 120,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Image(
+                        image: NetworkImage(categoriesBloc
+                            .categoriesData!.categories[index].image),
+                        fit: BoxFit.contain,
+                        width: 120,
+                        height: 120,
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
@@ -73,8 +80,7 @@ class CategoriesListVerticalBuilder extends StatelessWidget {
               ),
             );
           },
-          separatorBuilder: (context, index) =>
-          const SizedBox(
+          separatorBuilder: (context, index) => const SizedBox(
             height: 10,
           ),
         );
