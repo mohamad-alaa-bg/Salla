@@ -5,6 +5,7 @@ import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/util/constants.dart';
 import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/custom_text_form_field.dart';
+import 'package:salla/core/widgets/flutter_toast.dart';
 import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/home/presentation/pages/home_layout.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
@@ -35,13 +36,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     var settingBloc = SettingsBloc.get(context);
     return BlocConsumer<SettingsBloc, SettingsState>(
+      buildWhen: (previous, current) =>
+          (current is SettingsLoadedState) ||
+          (current is UpdateProfileIsLoadingState) ||
+          (current is UpdateProfileSuccessState) ||
+          (current is UpdateProfileErrorState),
       listener: (context, state) {
-        if (state is SettingsLoadedState) {
+        if ((state is SettingsLoadedState) ||(state is UpdateProfileErrorState)) {
           if (settingBloc.settings?.data != null) {
             nameController.text = settingBloc.settings!.data!.name;
             emailController.text = settingBloc.settings!.data!.email;
             phoneController.text = settingBloc.settings!.data!.phone;
           }
+        }
+        if (state is UpdateProfileSuccessState) {
+          showToast(message: state.message, toastColor: ToastColor.success);
+        }
+        if (state is UpdateProfileErrorState) {
+          showToast(message: state.error, toastColor: ToastColor.error);
         }
         if (state is ChangeLanguageSuccessState) {
           Widget startingWidget;
@@ -200,22 +212,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           children: [
                             Expanded(
                               child: ElevatedButton(
-
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children:  [
-                                    const Icon(Icons.update),
-                                     const SizedBox(width: 10,),
+                                  children: [
+                                    state is UpdateProfileIsLoadingState
+                                        ?  const SizedBox(
+                                          width: 25,
+                                          height: 25,
+                                          child:   CircularProgressIndicator(color: Colors.white,),
+                                        )
+                                        : const Icon(Icons.update),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
                                     UserData.language == Language.english
                                         ? const Text('Update')
                                         : const Text('حفظ التعديلات'),
-
                                   ],
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  settingBloc.add(UpdateProfileEvent(
+                                      email: emailController.text,
+                                      name: nameController.text,
+                                      phoneNum: phoneController.text));
+                                },
                                 style: ButtonStyle(
                                   backgroundColor:
-                                  MaterialStateProperty.all(Colors.green),
+                                      MaterialStateProperty.all(Colors.green),
                                 ),
                               ),
                             ),
@@ -226,16 +249,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: ElevatedButton(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children:  [
+                                  children: [
                                     const Icon(Icons.logout),
-                                    const SizedBox(width: 10,),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
                                     UserData.language == Language.english
                                         ? const Text('Logout')
                                         : const Text('تسجيل الخروج'),
-
                                   ],
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  SharedPreferencesCache.removeValue(
+                                      key: 'token');
+                                  navigateAndReplacementAll(
+                                      context, const ShopLoginHome());
+                                },
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all(Colors.red),

@@ -57,16 +57,32 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           await SharedPreferencesCache.setValue(key: 'lang', value: event.value)
               .then((value) {
             UserData.language =
-            (SharedPreferencesCache.getValue(key: 'lang') == null) ||
-                (SharedPreferencesCache.getValue(key: 'lang') == 'en')
-                ? Language.english
-                : Language.arabic;
+                (SharedPreferencesCache.getValue(key: 'lang') == null) ||
+                        (SharedPreferencesCache.getValue(key: 'lang') == 'en')
+                    ? Language.english
+                    : Language.arabic;
           }).then((value) => print(UserData.language.toString()));
           emit(ChangeLanguageSuccessState());
         } catch (error) {
           emit(ChangeLanguageErrorState());
         }
       }
+      if (event is UpdateProfileEvent) {
+        emit(UpdateProfileIsLoadingState());
+        try {
+          SettingsModel settingsModel = await settingsRepoImp.updateSetting(
+              event.name, event.email, event.phoneNum);
+          if (settingsModel.status) {
+            settings = settingsModel;
+            emit(UpdateProfileSuccessState(message: settings!.message));
+          } else {
+            emit(UpdateProfileErrorState(error: settingsModel.message.toString()));
+          }
+        } catch (error) {
+          emit(UpdateProfileErrorState(error: error.toString()));
+        }
+      }
+
       // TODO: implement event handler
     });
   }

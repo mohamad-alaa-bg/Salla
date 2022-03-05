@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:salla/core/data/local_data_source/shared_preferences.dart';
+import 'package:salla/core/util/constants.dart';
 import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
 import 'package:salla/features/onBoarding/domain/entities/boarding_item_module.dart';
@@ -33,9 +34,12 @@ class OnBoarding extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                navigateAndReplacementAll(context, const ShopLoginHome());
-                SharedPreferencesCache.setValue(key: 'onBoarding', value: false);
+                SharedPreferencesCache.setValue(
+                    key: 'onBoarding', value: false);
+                UserData.onBoardingState =
+                    SharedPreferencesCache.getValue(key: 'onBoarding') ?? true;
 
+                navigateAndReplacementAll(context, const ShopLoginHome());
               },
               child: const Text('Skip')),
         ],
@@ -79,7 +83,11 @@ class OnBoarding extends StatelessWidget {
                   onPressed: () {
                     if (isLast) {
                       navigateAndReplacementAll(context, const ShopLoginHome());
-                      SharedPreferencesCache.setValue(key: 'onBoarding', value: false);
+                      SharedPreferencesCache.setValue(
+                          key: 'onBoarding', value: false);
+                      UserData.onBoardingState =
+                          SharedPreferencesCache.getValue(key: 'onBoarding') ??
+                              true;
                     } else {
                       pageController.nextPage(
                         duration: const Duration(milliseconds: 800),

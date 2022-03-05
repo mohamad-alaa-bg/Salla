@@ -7,10 +7,11 @@ class EndPoints {
   static const categories = 'categories';
   static const favorite = 'favorites';
   static const profile = 'profile';
+  static const updateProfile = 'update-profile';
 }
 
 class UserData {
-  static final bool onBoardingState =
+  static bool onBoardingState =
       SharedPreferencesCache.getValue(key: 'onBoarding') ?? true;
   static String token = SharedPreferencesCache.getValue(key: 'token') ?? '';
 
@@ -20,8 +21,9 @@ class UserData {
           ? ThemeModeSetting.light
           : ThemeModeSetting.dark;
 
-  static Language language = (SharedPreferencesCache.getValue(key: 'lang') == null) ||
-      (SharedPreferencesCache.getValue(key: 'lang') == 'en')
-      ? Language.english
-      : Language.arabic;
+  static Language language =
+      (SharedPreferencesCache.getValue(key: 'lang') == null) ||
+              (SharedPreferencesCache.getValue(key: 'lang') == 'en')
+          ? Language.english
+          : Language.arabic;
 }

@@ -22,3 +22,17 @@ class ChangeLanguageIsLoadingState extends SettingsState {}
 class ChangeLanguageSuccessState extends SettingsState {}
 
 class ChangeLanguageErrorState extends SettingsState {}
+
+class UpdateProfileIsLoadingState extends SettingsState {}
+
+class UpdateProfileSuccessState extends SettingsState {
+  final String message;
+
+  UpdateProfileSuccessState({required this.message});
+}
+
+class UpdateProfileErrorState extends SettingsState {
+  final String error;
+
+  UpdateProfileErrorState({required this.error});
+}
