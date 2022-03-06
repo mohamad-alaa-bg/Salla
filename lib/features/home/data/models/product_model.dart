@@ -2,7 +2,7 @@ class ProductModel {
   final int id;
   final dynamic price;
   final dynamic oldPrice;
-  final int discount;
+  final int? discount;
   final String image;
   final String name;
   final String description;
@@ -28,7 +28,7 @@ class ProductModel {
       id: product['id'],
       price: product['price'],
       oldPrice: product['old_price'],
-      discount: product['discount'],
+      discount: product['discount'] ?? 0,
       image: product['image'],
       name: product['name'],
       description: product['description'],

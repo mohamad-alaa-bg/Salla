@@ -58,7 +58,7 @@ class ProductGridView extends StatelessWidget {
                             width: double.infinity,
                             fit: BoxFit.contain,
                           ),
-                          if (products[index].discount > 0)
+                          if (products[index].discount! > 0)
                             Container(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5),
@@ -104,7 +104,7 @@ class ProductGridView extends StatelessWidget {
                                   const SizedBox(
                                     width: 5,
                                   ),
-                                  if (products[index].discount > 0)
+                                  if (products[index].discount! > 0)
                                     Text(
                                       products[index]
                                           .oldPrice
