@@ -16,7 +16,7 @@ class _SearchLayoutState extends State<SearchLayout> {
   dynamic searchBloc;
   TextEditingController searchController = TextEditingController();
   String text = "";
-  bool isRtl= false;
+  bool isRtl = false;
 
   @override
   void initState() {
@@ -40,8 +40,6 @@ class _SearchLayoutState extends State<SearchLayout> {
                 AutoDirection(
                   onDirectionChange: (isRTL) {
                     setState(() {
-                      print(isRTL);
-
                     });
                   },
                   text: text,
