@@ -1,3 +1,4 @@
+import 'package:auto_direction/auto_direction.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -9,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onSubmitted;
+  final ValueChanged<String>? onChange;
 
 
   // ignore: use_key_in_widget_constructors
@@ -21,16 +23,20 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     this.validator,
     this.onSubmitted,
+    this.onChange,
   });
+
 
   @override
   Widget build(BuildContext context) {
+    String str = "";
     return TextFormField(
       controller: textEditingController,
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
       onFieldSubmitted: onSubmitted,
+      onChanged: onChange,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
