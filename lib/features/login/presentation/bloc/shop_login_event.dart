@@ -15,3 +15,14 @@ class ShopUserLoginEvent extends ShopLoginEvent {
     this.password,
   });
 }
+class ShopUserRegisterEvent extends ShopLoginEvent {
+  final String? name;
+  final String? email;
+  final String? password;
+
+  ShopUserRegisterEvent({
+    required this.name,
+    required this.email,
+    required this.password,
+  });
+}
