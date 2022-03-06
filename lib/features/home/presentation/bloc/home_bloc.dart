@@ -10,6 +10,7 @@ import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
 import 'package:salla/features/home/presentation/pages/product_Screen.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
+import 'package:salla/features/search/presentation/pages/search_layout.dart';
 import 'package:salla/features/settings/presentation/pages/settings_layout.dart';
 
 part 'home_event.dart';
@@ -47,9 +48,39 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   AppBar getAppBar(BuildContext context, int index) {
     List<AppBar> appBar = [
-      AppBar(),
-      AppBar(),
-      AppBar(),
+      AppBar(
+        title: const Text('Salla'),
+        centerTitle: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                navigateTo(context, const SearchLayout());
+              },
+              icon: const Icon(Icons.search_rounded)),
+        ],
+      ),
+      AppBar(
+        title: const Text('Categories'),
+        centerTitle: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                navigateTo(context, const SearchLayout());
+              },
+              icon: const Icon(Icons.search_rounded)),
+        ],
+      ),
+      AppBar(
+        title: const Text('Favorites'),
+        centerTitle: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                navigateTo(context, const SearchLayout());
+              },
+              icon: const Icon(Icons.search_rounded)),
+        ],
+      ),
       AppBar(
         elevation: 0,
         toolbarHeight: 100,
@@ -57,18 +88,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         // systemOverlayStyle: const SystemUiOverlayStyle().copyWith(statusBarColor: Colors.blueAccent),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children:  [
-          UserData.language == Language.english ? const Text('Settings') : const Text('الاعدادات'),
+          children: [
+            UserData.language == Language.english
+                ? const Text('Settings')
+                : const Text('الاعدادات'),
             const SizedBox(
               height: 5,
             ),
-            UserData.language == Language.english ? const Text('Account Information') : const Text('معلومات الحساب'),
-
+            UserData.language == Language.english
+                ? const Text('Account Information')
+                : const Text('معلومات الحساب'),
           ],
         ),
 
         actions: [
-
           IconButton(
             padding: const EdgeInsets.only(right: 10),
             onPressed: () {

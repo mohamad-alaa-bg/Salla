@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/custom_text_form_field.dart';
@@ -8,17 +9,18 @@ import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/home/presentation/pages/home_layout.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
 import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
-import 'package:salla/features/login/presentation/pages/register_page.dart';
+import 'package:salla/features/login/presentation/pages/login_page.dart';
 
-class ShopLoginHome extends StatefulWidget {
-  const ShopLoginHome({Key? key}) : super(key: key);
+class ShopRegisterHome extends StatefulWidget {
+  const ShopRegisterHome({Key? key}) : super(key: key);
 
   @override
-  State<ShopLoginHome> createState() => _ShopLoginHomeState();
+  State<ShopRegisterHome> createState() => _ShopRegisterHomeState();
 }
 
-class _ShopLoginHomeState extends State<ShopLoginHome> {
+class _ShopRegisterHomeState extends State<ShopRegisterHome> {
   bool obscurePassword = true;
+  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var loginFormKey = GlobalKey<FormState>();
@@ -27,8 +29,7 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
 
   void login() {
     if (loginFormKey.currentState!.validate()) {
-      shopLoginBloc.add(ShopUserLoginEvent(
-          email: emailController.text, password: passwordController.text));
+      shopLoginBloc.add(ShopUserRegisterEvent(name: nameController.text, email: emailController.text, password: passwordController.text));
     }
   }
 
@@ -77,18 +78,32 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'LOGIN',
+                            'Register',
                             style: Theme.of(context).textTheme.headline5,
                           ),
                           const SizedBox(
                             height: 15,
                           ),
                           Text(
-                            'login now to browse our hot offers',
+                            'Register now',
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                           const SizedBox(
                             height: 40,
+                          ),
+                          CustomTextFormField(
+                            textEditingController: nameController,
+                            label: 'Name',
+                            prefixIcon: const Icon(Icons.person),
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if ((value == null) || (value.isEmpty)) {
+                                return 'Please enter valid name';
+                              }
+                            },
+                          ),
+                          const SizedBox(
+                            height: 15,
                           ),
                           CustomTextFormField(
                             textEditingController: emailController,
@@ -141,7 +156,7 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                                     onPressed: () {
                                       login();
                                     },
-                                    child: const Text('LOGIN'),
+                                    child: const Text('REGISTER'),
                                   ),
                           ),
                           const SizedBox(
@@ -150,12 +165,12 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text('Don\'t have an account?'),
+                              const Text('Already have an account?'),
                               TextButton(
                                 onPressed: () {
-                                  navigateAndReplacementAll(context, const ShopRegisterHome());
+                                  navigateAndReplacementAll(context, const ShopLoginHome());
                                 },
-                                child: const Text('Register Now'),
+                                child: const Text('Login'),
                               ),
                             ],
                           )

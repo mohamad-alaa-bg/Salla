@@ -16,20 +16,21 @@ part 'shop_login_state.dart';
 class ShopLoginBloc extends Bloc<ShopLoginEvent, ShopLoginState> {
   final ShopLoginRepoImp shopLoginRepoImp;
   bool obscurePassword = true;
-  Widget suffixIcon =   const Icon(Icons.visibility_outlined);
-  ShopLoginBloc({required this.shopLoginRepoImp}) : super(ShopLoginInitial()) {
+  Widget suffixIcon = const Icon(Icons.visibility_outlined);
 
+  ShopLoginBloc({required this.shopLoginRepoImp}) : super(ShopLoginInitial()) {
     on((event, emit) async {
       if (event is ShopUserLoginEvent) {
         emit(ShopLoginLoadingState());
         try {
           ShopLoginModel loginResponse =
-              await shopLoginRepoImp.userLogin(url: EndPoints.login, data: {
+          await shopLoginRepoImp.userLogin(url: EndPoints.login, data: {
             'email': event.email,
             'password': event.password,
           });
-          if(loginResponse.data?.token !=null){
-            SharedPreferencesCache.setValue(key: 'token', value: loginResponse.data?.token);
+          if (loginResponse.data?.token != null) {
+            SharedPreferencesCache.setValue(
+                key: 'token', value: loginResponse.data?.token);
             UserData.token = SharedPreferencesCache.getValue(key: 'token');
           }
 
@@ -39,12 +40,32 @@ class ShopLoginBloc extends Bloc<ShopLoginEvent, ShopLoginState> {
           print(error);
           emit(ShopLoginErrorState());
         }
-      }else if(event is LoginChangePasswordVisibilityEvent){
+      } else if (event is LoginChangePasswordVisibilityEvent) {
         obscurePassword = !obscurePassword;
         suffixIcon = obscurePassword
             ? const Icon(Icons.visibility_outlined)
             : const Icon(Icons.visibility_off_outlined);
         emit(LoginChangedPasswordVisibilityState());
+      } else if (event is ShopUserRegisterEvent) {
+        emit(ShopLoginLoadingState());
+        try {
+          ShopLoginModel loginResponse =
+          await shopLoginRepoImp.userRegister(name: event.name.toString(),
+              email: event.email.toString(),
+              password: event.password.toString(),
+              phone: "0974056564");
+          if (loginResponse.data?.token != null) {
+            SharedPreferencesCache.setValue(
+                key: 'token', value: loginResponse.data?.token);
+            UserData.token = SharedPreferencesCache.getValue(key: 'token');
+          }
+
+          //print(loginResponse.data!.email);
+          emit(ShopLoginSucceededState(loginModel: loginResponse));
+        } catch (error) {
+          print(error);
+          emit(ShopLoginErrorState());
+        }
       }
     });
   }

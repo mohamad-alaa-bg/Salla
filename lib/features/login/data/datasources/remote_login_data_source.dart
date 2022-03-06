@@ -5,6 +5,7 @@ import 'package:salla/features/login/data/models/shop_login_model.dart';
 
 abstract class RemoteLoginDataSource{
   Future<ShopLoginModel> postData({required String url, required Map<dynamic, dynamic> data});
+
 }
 
 class RemoteLoginDataSourceImp implements RemoteLoginDataSource{
