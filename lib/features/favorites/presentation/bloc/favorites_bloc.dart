@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:salla/features/favorites/data/models/favorite_model.dart';
 import 'package:salla/features/favorites/data/models/favorites_data_products_model.dart';
 import 'package:salla/features/favorites/data/repositories/favorites_repo_impl.dart';
 import 'package:salla/features/favorites/data/models/favorite_change_state.dart';
@@ -70,7 +69,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
                   image: event.productModel.image,
                   price: event.productModel.price,
                   oldPrice: event.productModel.oldPrice,
-                  discount: event.productModel.discount,
+                  discount: event.productModel.discount??0,
                   description: event.productModel.description));
               emit(FavoritesLoadedSuccessState());
             }
@@ -87,7 +86,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
                     image: event.productModel.image,
                     price: event.productModel.price,
                     oldPrice: event.productModel.oldPrice,
-                    discount: event.productModel.discount,
+                    discount: event.productModel.discount??0,
                     description: event.productModel.description));
                 emit(FavoritesLoadedSuccessState());
               }

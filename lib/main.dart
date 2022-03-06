@@ -18,6 +18,8 @@ import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart'
 import 'package:salla/features/login/presentation/bloc/shop_login_bloc.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
 import 'package:salla/features/onBoarding/presentation/pages/onBoarding.dart';
+import 'package:salla/features/search/data/repositories/search_repo_impl.dart';
+import 'package:salla/features/search/presentation/bloc/search_bloc.dart';
 import 'package:salla/features/settings/data/repositories/settings_repo_imp.dart';
 import 'package:salla/features/settings/presentation/bloc/settings_bloc.dart';
 
@@ -62,6 +64,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => SearchBloc(searchRepoImpl: SearchRepoImpl()),
+        ),
         BlocProvider(
           create: (context) =>
               ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
