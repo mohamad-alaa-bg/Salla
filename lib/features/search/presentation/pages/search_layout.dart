@@ -1,3 +1,4 @@
+import 'package:auto_direction/auto_direction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/core/widgets/custom_text_form_field.dart';
@@ -12,37 +13,53 @@ class SearchLayout extends StatefulWidget {
 }
 
 class _SearchLayoutState extends State<SearchLayout> {
-  var searchBloc;
+  dynamic searchBloc;
   TextEditingController searchController = TextEditingController();
+  String text = "";
+  bool isRtl= false;
 
   @override
   void initState() {
     searchBloc = SearchBloc.get(context);
-     searchBloc.add(SearchProductsEvent(text: ''));
+    searchBloc.add(SearchProductsEvent(text: ''));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Search'),
+      ),
       body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                CustomTextFormField(
-                  textEditingController: searchController,
-                  label: 'Search',
-                  onSubmitted: (value) => searchBloc
-                      .add(SearchProductsEvent(text: searchController.text)),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.search),
-                    onPressed: () {
-                      searchBloc.add(
-                          SearchProductsEvent(text: searchController.text));
-                    },
+                AutoDirection(
+                  onDirectionChange: (isRTL) {
+                    setState(() {
+                      print(isRTL);
+
+                    });
+                  },
+                  text: text,
+                  child: CustomTextFormField(
+                    textEditingController: searchController,
+                    label: 'Search',
+                    onChange: (value) => setState(() {
+                      text = value;
+                    }),
+                    onSubmitted: (value) => searchBloc
+                        .add(SearchProductsEvent(text: searchController.text)),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () {
+                        searchBloc.add(
+                            SearchProductsEvent(text: searchController.text));
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(

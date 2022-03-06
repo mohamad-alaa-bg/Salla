@@ -42,7 +42,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           (current is UpdateProfileSuccessState) ||
           (current is UpdateProfileErrorState),
       listener: (context, state) {
-        if ((state is SettingsLoadedState) ||(state is UpdateProfileErrorState)) {
+        if ((state is SettingsLoadedState) ||
+            (state is UpdateProfileErrorState)) {
           if (settingBloc.settings?.data != null) {
             nameController.text = settingBloc.settings!.data!.name;
             emailController.text = settingBloc.settings!.data!.email;
@@ -85,196 +86,207 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                 child: SizedBox(
+                  height: double.infinity,
                   width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: CircleAvatar(
-                          radius: 25,
-                          backgroundImage: NetworkImage(
-                            settingBloc.settings!.data!.image,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CustomTextFormField(
-                        textEditingController: nameController,
-                        label: UserData.language == Language.english
-                            ? 'Name'
-                            : 'الاسم',
-                        prefixIcon: const Icon(Icons.person),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      CustomTextFormField(
-                        textEditingController: emailController,
-                        label: UserData.language == Language.english
-                            ? 'Email'
-                            : 'البريد الالكتروني',
-                        prefixIcon: const Icon(Icons.email),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      CustomTextFormField(
-                        textEditingController: phoneController,
-                        label: UserData.language == Language.english
-                            ? 'Phone'
-                            : 'الرقم',
-                        prefixIcon: const Icon(Icons.phone_android),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          children: [
-                            UserData.language == Language.english
-                                ? const Text('Dark Mode')
-                                : const Text('الوضع الداكن'),
-                            const Spacer(),
-                            Switch(
-                              activeColor: Theme.of(context).primaryColor,
-                              value:
-                                  UserData.themeMode == ThemeModeSetting.dark,
-                              onChanged: (value) {
-                                print(value);
-                                settingBloc
-                                    .add(ChangeThemeModeEvent(value: value));
-                              },
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+
+                    child: SizedBox(
+                        height: 600,
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 150,
+                            height: 150,
+                            child: CircleAvatar(
+                              radius: 25,
+                              backgroundImage: NetworkImage(
+                                settingBloc.settings!.data!.image,
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          children: [
-                            UserData.language == Language.english
-                                ? const Text('Language')
-                                : const Text('اللغة'),
-                            const Spacer(),
-                            Row(
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          CustomTextFormField(
+                            textEditingController: nameController,
+                            label: UserData.language == Language.english
+                                ? 'Name'
+                                : 'الاسم',
+                            prefixIcon: const Icon(Icons.person),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CustomTextFormField(
+                            textEditingController: emailController,
+                            label: UserData.language == Language.english
+                                ? 'Email'
+                                : 'البريد الالكتروني',
+                            prefixIcon: const Icon(Icons.email),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CustomTextFormField(
+                            textEditingController: phoneController,
+                            label: UserData.language == Language.english
+                                ? 'Phone'
+                                : 'الرقم',
+                            prefixIcon: const Icon(Icons.phone_android),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
                               children: [
                                 UserData.language == Language.english
-                                    ? const Text('English')
-                                    : const Text('الانجليزية'),
-                                Radio(
-                                  value: Colors.green,
-                                  groupValue:
-                                      UserData.language == Language.english
-                                          ? Colors.green
-                                          : Colors.white,
+                                    ? const Text('Dark Mode')
+                                    : const Text('الوضع الداكن'),
+                                const Spacer(),
+                                Switch(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value:
+                                      UserData.themeMode == ThemeModeSetting.dark,
                                   onChanged: (value) {
-                                    settingBloc
-                                        .add(ChangeLanguageEvent(value: 'en'));
                                     print(value);
-                                  },
-                                  activeColor: Colors.green,
-                                ),
-                                UserData.language == Language.english
-                                    ? const Text('Arabic')
-                                    : const Text('العربية'),
-                                Radio(
-                                  value: Colors.green,
-                                  groupValue:
-                                      UserData.language == Language.english
-                                          ? Colors.white
-                                          : Colors.green,
-                                  onChanged: (value) {
                                     settingBloc
-                                        .add(ChangeLanguageEvent(value: 'ar'));
-
-                                    print(value);
+                                        .add(ChangeThemeModeEvent(value: value));
                                   },
-                                  activeColor: Colors.green,
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                UserData.language == Language.english
+                                    ? const Text('Language')
+                                    : const Text('اللغة'),
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    UserData.language == Language.english
+                                        ? const Text('English')
+                                        : const Text('الانجليزية'),
+                                    Radio(
+                                      value: Colors.green,
+                                      groupValue:
+                                          UserData.language == Language.english
+                                              ? Colors.green
+                                              : Colors.white,
+                                      onChanged: (value) {
+                                        settingBloc.add(
+                                            ChangeLanguageEvent(value: 'en'));
+                                        print(value);
+                                      },
+                                      activeColor: Colors.green,
+                                    ),
+                                    UserData.language == Language.english
+                                        ? const Text('Arabic')
+                                        : const Text('العربية'),
+                                    Radio(
+                                      value: Colors.green,
+                                      groupValue:
+                                          UserData.language == Language.english
+                                              ? Colors.white
+                                              : Colors.green,
+                                      onChanged: (value) {
+                                        settingBloc.add(
+                                            ChangeLanguageEvent(value: 'ar'));
+
+                                        print(value);
+                                      },
+                                      activeColor: Colors.green,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        state is UpdateProfileIsLoadingState
+                                            ? const SizedBox(
+                                                width: 25,
+                                                height: 25,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                ),
+                                              )
+                                            : const Icon(Icons.update),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        UserData.language == Language.english
+                                            ? const Text('Update')
+                                            : const Text('حفظ التعديلات'),
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      settingBloc.add(UpdateProfileEvent(
+                                          email: emailController.text,
+                                          name: nameController.text,
+                                          phoneNum: phoneController.text));
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(Colors.green),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 30,
+                                ),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Icons.logout),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        UserData.language == Language.english
+                                            ? const Text('Logout')
+                                            : const Text('تسجيل الخروج'),
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      SharedPreferencesCache.removeValue(
+                                          key: 'token');
+                                      navigateAndReplacementAll(
+                                          context, const ShopLoginHome());
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(Colors.red),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    state is UpdateProfileIsLoadingState
-                                        ?  const SizedBox(
-                                          width: 25,
-                                          height: 25,
-                                          child:   CircularProgressIndicator(color: Colors.white,),
-                                        )
-                                        : const Icon(Icons.update),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    UserData.language == Language.english
-                                        ? const Text('Update')
-                                        : const Text('حفظ التعديلات'),
-                                  ],
-                                ),
-                                onPressed: () {
-                                  settingBloc.add(UpdateProfileEvent(
-                                      email: emailController.text,
-                                      name: nameController.text,
-                                      phoneNum: phoneController.text));
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.green),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            Expanded(
-                              child: ElevatedButton(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Icons.logout),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    UserData.language == Language.english
-                                        ? const Text('Logout')
-                                        : const Text('تسجيل الخروج'),
-                                  ],
-                                ),
-                                onPressed: () {
-                                  SharedPreferencesCache.removeValue(
-                                      key: 'token');
-                                  navigateAndReplacementAll(
-                                      context, const ShopLoginHome());
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.red),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                 ),
               );
