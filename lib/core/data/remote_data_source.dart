@@ -7,6 +7,7 @@ class DioHelper {
   static Dio? dio;
 
   static init() {
+    print('init dio');
     dio = Dio(
       BaseOptions(
           baseUrl: 'https://student.valuxapps.com/api/',
@@ -45,7 +46,7 @@ class DioHelper {
       data: data,
       queryParameters: query,
     );
-    print(response);
+    // print(response);
     return response;
   }
 
@@ -66,7 +67,7 @@ class DioHelper {
       data: data,
       queryParameters: query,
     );
-    print(response);
+    // print(response);
     return response;
   }
 }

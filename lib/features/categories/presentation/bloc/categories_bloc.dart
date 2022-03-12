@@ -13,6 +13,7 @@ part 'categories_state.dart';
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final CategoriesRepoImp categoriesRepoImp;
   CategoriesBloc({required this.categoriesRepoImp}) : super(CategoriesInitial()) {
+    print('create categories bloc');
     on<CategoriesEvent>((event, emit) async{
       if(event is GetCategoriesEvent){
         emit(CategoriesIsLoadingState());

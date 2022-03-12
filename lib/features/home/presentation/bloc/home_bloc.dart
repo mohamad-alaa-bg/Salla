@@ -8,6 +8,7 @@ import 'package:salla/features/categories/presentation/pages/categories_page.dar
 import 'package:salla/features/favorites/presentation/pages/FavoriteScreen.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
+import 'package:salla/features/home/domain/repositories/home_page_repo.dart';
 import 'package:salla/features/home/presentation/pages/product_Screen.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
 import 'package:salla/features/search/presentation/pages/search_layout.dart';
@@ -18,7 +19,7 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomePageRepoImp homePageRepoImp;
+  HomePageRepo homePageRepoImp;
 
   HomeBloc({required this.homePageRepoImp}) : super(HomeInitial()) {
     on<HomeEvent>((event, emit) async {
@@ -27,6 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(BottomNavigatorItemState());
       }
       if (event is GetHomePageDataEvent) {
+        homeData = null;
         emit(HomePageDataIsLoading());
         try {
           homeData = await homePageRepoImp.getHomeData();
@@ -117,22 +119,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     return appBar[index];
   }
 
-  List<BottomNavigationBarItem> bottomNavigatorItems = [
-    BottomNavigationBarItem(
-        icon: const Icon(Icons.home),
-        label: UserData.language == Language.english ? 'Home' : 'الرئيسية'),
-    BottomNavigationBarItem(
-        icon: const Icon(Icons.grid_view),
-        label:
-            UserData.language == Language.english ? 'Categories' : 'التصنيفات'),
-    BottomNavigationBarItem(
-        icon: const Icon(Icons.favorite),
-        label: UserData.language == Language.english ? 'Favorites' : 'المفضلة'),
-    BottomNavigationBarItem(
-        icon: const Icon(Icons.settings),
-        label:
-            UserData.language == Language.english ? 'Settings' : 'الاعدادات'),
-  ];
+  List<BottomNavigationBarItem> getBottomNavigatorItems() {
+    return [
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.home),
+          label: UserData.language == Language.english ? 'Home' : 'الرئيسية'),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.grid_view),
+          label: UserData.language == Language.english
+              ? 'Categories'
+              : 'التصنيفات'),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.favorite),
+          label:
+              UserData.language == Language.english ? 'Favorites' : 'المفضلة'),
+      BottomNavigationBarItem(
+          icon: const Icon(Icons.settings),
+          label:
+              UserData.language == Language.english ? 'Settings' : 'الاعدادات'),
+    ];
+  }
+
+
   List<Widget> bottomNavigatorScreens = const [
     ProductsScreen(),
     CategoriesScreen(),

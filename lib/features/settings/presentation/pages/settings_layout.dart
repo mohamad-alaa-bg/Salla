@@ -36,11 +36,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     var settingBloc = SettingsBloc.get(context);
     return BlocConsumer<SettingsBloc, SettingsState>(
-      buildWhen: (previous, current) =>
-          (current is SettingsLoadedState) ||
-          (current is UpdateProfileIsLoadingState) ||
-          (current is UpdateProfileSuccessState) ||
-          (current is UpdateProfileErrorState),
+      // buildWhen: (previous, current) =>
+      //     (current is SettingsLoadedState) ||
+      //     (current is UpdateProfileIsLoadingState) ||
+      //     (current is UpdateProfileSuccessState) ||
+      //     (current is UpdateProfileErrorState),
       listener: (context, state) {
         if ((state is SettingsLoadedState) ||
             (state is UpdateProfileErrorState)) {
@@ -57,19 +57,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           showToast(message: state.error, toastColor: ToastColor.error);
         }
         if (state is ChangeLanguageSuccessState) {
-          Widget startingWidget;
-
-          if (UserData.onBoardingState) {
-            startingWidget = OnBoarding();
-          } else {
-            if (UserData.token.isNotEmpty) {
-              startingWidget = const HomeLayout();
-            } else {
-              startingWidget = const ShopLoginHome();
-            }
-          }
-          navigateAndReplacementAll(
-              context, MyApp(startingWidget: startingWidget));
+          // navigateAndReplacementAll(
+          //     context, const MyApp(startingWidget: HomeLayout()));
         }
       },
       builder: (context, state) {
@@ -90,9 +79,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   width: double.infinity,
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-
                     child: SizedBox(
-                        height: 600,
+                      height: 600,
                       width: double.infinity,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,12 +138,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 const Spacer(),
                                 Switch(
                                   activeColor: Theme.of(context).primaryColor,
-                                  value:
-                                      UserData.themeMode == ThemeModeSetting.dark,
+                                  value: UserData.themeMode ==
+                                      ThemeModeSetting.dark,
                                   onChanged: (value) {
                                     print(value);
-                                    settingBloc
-                                        .add(ChangeThemeModeEvent(value: value));
+                                    settingBloc.add(
+                                        ChangeThemeModeEvent(value: value));
                                   },
                                 ),
                               ],
@@ -221,13 +209,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Expanded(
                                   child: ElevatedButton(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         state is UpdateProfileIsLoadingState
                                             ? const SizedBox(
                                                 width: 25,
                                                 height: 25,
-                                                child: CircularProgressIndicator(
+                                                child:
+                                                    CircularProgressIndicator(
                                                   color: Colors.white,
                                                 ),
                                               )
@@ -248,7 +238,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     },
                                     style: ButtonStyle(
                                       backgroundColor:
-                                          MaterialStateProperty.all(Colors.green),
+                                          MaterialStateProperty.all(
+                                              Colors.green),
                                     ),
                                   ),
                                 ),
@@ -258,7 +249,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Expanded(
                                   child: ElevatedButton(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Icons.logout),
                                         const SizedBox(

@@ -42,6 +42,7 @@ dependencies:
   equatable: ^2.0.3
   carousel_slider: ^4.0.0
   auto_direction: ^0.0.5
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:

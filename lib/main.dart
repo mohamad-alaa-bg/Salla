@@ -22,11 +22,14 @@ import 'package:salla/features/search/data/repositories/search_repo_impl.dart';
 import 'package:salla/features/search/presentation/bloc/search_bloc.dart';
 import 'package:salla/features/settings/data/repositories/settings_repo_imp.dart';
 import 'package:salla/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:salla/injection.dart';
 
 import 'core/util/constants.dart';
+import 'features/home/domain/repositories/home_page_repo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await init();
   await DioHelper.init();
   await SharedPreferencesCache.init();
 
@@ -76,8 +79,8 @@ class MyApp extends StatelessWidget {
               CategoriesBloc(categoriesRepoImp: CategoriesRepoImp())
                 ..add(GetCategoriesEvent()),
         ),
-        BlocProvider(
-          create: (context) => HomeBloc(homePageRepoImp: HomePageRepoImp())
+        BlocProvider<HomeBloc>(
+          create: (context) => sl()
             ..add(GetHomePageDataEvent()),
         ),
         BlocProvider(

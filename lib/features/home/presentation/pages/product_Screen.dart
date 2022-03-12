@@ -15,9 +15,8 @@ class ProductsScreen extends StatelessWidget {
     var bloc = HomeBloc.get(context);
     int indexC = 0;
     return BlocBuilder<HomeBloc, HomeState>(
-      buildWhen: (previous, current) => current is HomePageDataSuccess,
       builder: (context, state) {
-        return (bloc.homeData == null) && (categoriesBloc.categoriesData == null)
+        return (bloc.homeData == null) || (categoriesBloc.categoriesData == null)
             ? const Center(
                 child: CircularProgressIndicator(),
               )

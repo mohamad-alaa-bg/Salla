@@ -4,6 +4,9 @@ import 'package:salla/features/home/data/models/home_model.dart';
 import 'package:salla/features/home/domain/repositories/home_page_repo.dart';
 
 class HomePageRepoImp implements HomePageRepo{
+  HomePageRepoImp(){
+    print('create Home Repo Imp');
+  }
   RemoteHomePageDataImp remoteHomePageDataImp = RemoteHomePageDataImp();
   @override
   Future<HomeModel> getHomeData() {

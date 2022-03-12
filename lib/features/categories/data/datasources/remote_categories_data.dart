@@ -10,6 +10,9 @@ abstract class RemoteCategoriesDataSource{
 }
 
 class RemoteCategoriesDataSourceImp extends RemoteCategoriesDataSource{
+  RemoteCategoriesDataSourceImp(){
+   print('create categories data Imp') ;
+  }
   @override
   Future<CategoriesModel> getCategories() async{
     Response response = await DioHelper.getData(url: EndPoints.categories);
