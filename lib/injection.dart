@@ -22,6 +22,9 @@ Future<void> init() async {
   sl.registerLazySingleton<FavoritesRepo>(() => FavoritesRepoImp());
   sl.registerLazySingleton<SettingsRepo>(() => SettingsRepoImp());
 
+  //UseCases
+
+  //Blocs
 
   sl.registerLazySingleton(() => HomeBloc(homePageRepoImp: sl()));
 }
