@@ -6,6 +6,7 @@ abstract class FavoritesState {}
 class FavoritesInitial extends FavoritesState {}
 class FavoritesLoadedSuccessState extends FavoritesState{
 }
+class FavoritesIsLoadingState extends FavoritesState{}
 class FavoritesLoadedErrorState extends FavoritesState{}
 class FavoriteDeleteSuccessState extends FavoritesState{}
 class FavoriteDeleteWarningState extends FavoritesState{

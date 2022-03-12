@@ -35,7 +35,7 @@ Future<void> init() async {
   sl.registerFactory(() => ShopLoginBloc(shopLoginRepo: sl()));
   sl.registerFactory(() => HomeBloc(homePageRepo: sl()));
   sl.registerFactory(() => CategoriesBloc(categoriesRepo: sl()));
-  sl.registerFactory(() => FavoritesBloc(favoritesRepo: sl()));
+  sl.registerLazySingleton(() => FavoritesBloc(favoritesRepo: sl()));
   sl.registerFactory(() => SettingsBloc(settingsRepo: sl()));
   sl.registerFactory(() => SearchBloc(searchRepo: sl()));
 }

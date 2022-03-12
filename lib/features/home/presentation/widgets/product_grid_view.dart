@@ -10,6 +10,7 @@ import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
 
 class ProductGridView extends StatelessWidget {
   final List<ProductModel> products;
+
   final ScrollPhysics? physics;
 
   const ProductGridView({Key? key, required this.products, this.physics})
@@ -17,7 +18,6 @@ class ProductGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var homeBloc = HomeBloc.get(context);
     var favoritesBloc = FavoritesBloc.get(context);
     return BlocConsumer<FavoritesBloc, FavoritesState>(
       listener: (context, state) {

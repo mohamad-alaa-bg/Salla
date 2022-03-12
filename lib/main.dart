@@ -64,6 +64,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (context) => sl<FavoritesBloc>()..add(GetFavoritesEvent()),
+        ),
+        BlocProvider(
           create: (context) => sl<SettingsBloc>()..add(GetSettingsEvent()),
         ),
         BlocProvider(
@@ -77,11 +80,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HomeBloc>(
           create: (context) => sl()..add(GetHomePageDataEvent()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              FavoritesBloc(favoritesRepo: FavoritesRepoImp())
-                ..add(GetFavoritesEvent()),
         ),
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(

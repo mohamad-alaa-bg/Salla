@@ -8,6 +8,7 @@ import 'package:salla/core/util/enum.dart';
 import 'package:salla/core/widgets/custom_text_form_field.dart';
 import 'package:salla/core/widgets/flutter_toast.dart';
 import 'package:salla/core/widgets/navigator.dart';
+import 'package:salla/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:salla/features/home/presentation/pages/home_layout.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
 import 'package:salla/features/onBoarding/presentation/pages/onBoarding.dart';
@@ -59,6 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       //     (current is ChangeLanguageSuccessState),
       listener: (context, state) {
         if (state is UpdateProfileErrorState) {
+
           if (settingBloc.settings?.data != null) {
             nameController.text = settingBloc.settings!.data!.name;
             emailController.text = settingBloc.settings!.data!.email;
@@ -66,6 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }
         }
         if (state is SettingsLoadedState) {
+
           nameController.text = settingBloc.settings!.data!.name;
           emailController.text = settingBloc.settings!.data!.email;
           phoneController.text = settingBloc.settings!.data!.phone;
@@ -77,6 +80,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           showToast(message: state.error, toastColor: ToastColor.error);
         }
         if (state is ChangeLanguageSuccessState) {
+          FavoritesBloc favoritesBloc = sl();
+          favoritesBloc.add(GetFavoritesEvent());
           // navigateAndReplacementAll(
           //     context, const MyApp(startingWidget: HomeLayout()));
         }
