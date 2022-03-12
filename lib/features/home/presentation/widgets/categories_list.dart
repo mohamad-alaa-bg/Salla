@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:salla/core/util/constants.dart';
 import 'package:salla/core/util/enum.dart';
@@ -45,7 +46,7 @@ class CategoriesListBuilder extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5,left: 5,right: 5,bottom: 1),
                         child: Image(
-                          image: NetworkImage(
+                          image: CachedNetworkImageProvider(
                               categoriesData!.categories[index].image),
                           width: 120,
                           height: 120,

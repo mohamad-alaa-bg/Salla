@@ -7,7 +7,6 @@ import 'package:salla/core/widgets/navigator.dart';
 import 'package:salla/features/categories/presentation/pages/categories_page.dart';
 import 'package:salla/features/favorites/presentation/pages/FavoriteScreen.dart';
 import 'package:salla/features/home/data/models/home_model.dart';
-import 'package:salla/features/home/data/repositories/home_page_repo_imp.dart';
 import 'package:salla/features/home/domain/repositories/home_page_repo.dart';
 import 'package:salla/features/home/presentation/pages/product_Screen.dart';
 import 'package:salla/features/login/presentation/pages/login_page.dart';
@@ -28,12 +27,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(BottomNavigatorItemState());
       }
       if (event is GetHomePageDataEvent) {
-        homeData = null;
+        // homeData = null;
         emit(HomePageDataIsLoading());
         try {
-          homeData = await homePageRepo.getHomeData();
-          for (var e in homeData!.data.products) {}
+          homeData = await homePageRepo.getHomeData(UserData.language);
+          if(UserData.language == Language.english){
+            homeDataEn = homeData;
+          }else{
+            homeDataAr = homeData;
+          }
           emit(HomePageDataSuccess(homeData: homeData));
+          if(UserData.language == Language.english){
+            homeData = await homePageRepo.getHomeData(Language.arabic);
+            homeDataAr = homeData;
+          }else{
+            homeData = await homePageRepo.getHomeData(Language.english);
+            homeDataEn = homeData;
+          }
         } catch (error) {
           HomePageDataError();
         }
@@ -44,6 +54,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   HomeModel? homeData;
+  HomeModel? homeDataEn;
+  HomeModel? homeDataAr;
+  Image? test;
 
   static HomeBloc get(context) => BlocProvider.of(context);
   int bottomNavigatorIndex = 0;

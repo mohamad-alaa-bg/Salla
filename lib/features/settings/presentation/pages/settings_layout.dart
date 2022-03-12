@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,8 @@ import 'package:salla/features/onBoarding/presentation/pages/onBoarding.dart';
 import 'package:salla/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:salla/main.dart';
 
+import '../../../../injection.dart';
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
@@ -22,33 +25,50 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  var settingBloc ;
+
   @override
   void initState() {
-    SettingsBloc.get(context).add(GetSettingsEvent());
+    settingBloc = SettingsBloc.get(context);
+    if (settingBloc.settings?.data == null) {
+      print('null');
+      settingBloc.add(GetSettingsEvent());
+    }
+    if (settingBloc.settings?.data != null) {
+      setState(() {
+        nameController.text = settingBloc.settings!.data!.name;
+        emailController.text = settingBloc.settings!.data!.email;
+        phoneController.text = settingBloc.settings!.data!.phone;
+      });
+
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController phoneController = TextEditingController();
-
-    var settingBloc = SettingsBloc.get(context);
     return BlocConsumer<SettingsBloc, SettingsState>(
       // buildWhen: (previous, current) =>
       //     (current is SettingsLoadedState) ||
       //     (current is UpdateProfileIsLoadingState) ||
       //     (current is UpdateProfileSuccessState) ||
-      //     (current is UpdateProfileErrorState),
+      //     (current is UpdateProfileErrorState) ||
+      //     (current is ChangeLanguageSuccessState),
       listener: (context, state) {
-        if ((state is SettingsLoadedState) ||
-            (state is UpdateProfileErrorState)) {
+        if (state is UpdateProfileErrorState) {
           if (settingBloc.settings?.data != null) {
             nameController.text = settingBloc.settings!.data!.name;
             emailController.text = settingBloc.settings!.data!.email;
             phoneController.text = settingBloc.settings!.data!.phone;
           }
+        }
+        if (state is SettingsLoadedState) {
+          nameController.text = settingBloc.settings!.data!.name;
+          emailController.text = settingBloc.settings!.data!.email;
+          phoneController.text = settingBloc.settings!.data!.phone;
         }
         if (state is UpdateProfileSuccessState) {
           showToast(message: state.message, toastColor: ToastColor.success);
@@ -62,11 +82,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         }
       },
       builder: (context, state) {
-        if (settingBloc.settings?.data != null) {
-          nameController.text = settingBloc.settings!.data!.name;
-          emailController.text = settingBloc.settings!.data!.email;
-          phoneController.text = settingBloc.settings!.data!.phone;
-        }
         return settingBloc.settings?.data == null
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -90,7 +105,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             height: 150,
                             child: CircleAvatar(
                               radius: 25,
-                              backgroundImage: NetworkImage(
+                              backgroundImage: CachedNetworkImageProvider(
                                 settingBloc.settings!.data!.image,
                               ),
                             ),

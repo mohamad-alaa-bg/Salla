@@ -20,7 +20,7 @@ class DioHelper {
       {required String url, String lang = 'en', String? token}) async {
     dio?.options.headers = {
       'Content-Type': 'application/json',
-      'lang': UserData.language == Language.english ? 'en':'ar',
+      'lang': lang,
       'Authorization': token??'',
     };
     Response response = await dio!.get(

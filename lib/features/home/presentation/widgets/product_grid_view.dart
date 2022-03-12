@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/core/util/constants.dart';
@@ -52,8 +53,9 @@ class ProductGridView extends StatelessWidget {
                       child: Stack(
                         alignment: AlignmentDirectional.bottomStart,
                         children: [
+
                           Image(
-                            image: NetworkImage(products[index].image),
+                            image: CachedNetworkImageProvider(products[index].imageStr),
                             height: 250,
                             width: double.infinity,
                             fit: BoxFit.contain,

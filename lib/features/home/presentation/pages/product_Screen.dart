@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salla/core/util/constants.dart';
+import 'package:salla/core/util/enum.dart';
 import 'package:salla/features/categories/presentation/bloc/categories_bloc.dart';
 import 'package:salla/features/home/presentation/bloc/home_bloc.dart';
 import 'package:salla/features/home/presentation/widgets/carousel_slider.dart';
@@ -72,7 +74,7 @@ class ProductsScreen extends StatelessWidget {
                     SizedBox(
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: ProductGridView(products: bloc.homeData!.data.products),
+                        child: ProductGridView(products:UserData.language == Language.english ? bloc.homeDataEn!.data.products :bloc.homeDataAr!.data.products ),
                       ),
                     ),
                   ],

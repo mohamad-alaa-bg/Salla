@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salla/core/util/constants.dart';
@@ -50,7 +51,7 @@ class CategoriesListVerticalBuilder extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Image(
-                        image: NetworkImage(categoriesBloc
+                        image: CachedNetworkImageProvider(categoriesBloc
                             .categoriesData!.categories[index].image),
                         fit: BoxFit.contain,
                         width: 120,

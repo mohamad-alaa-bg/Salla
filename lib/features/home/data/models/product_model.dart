@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
+
 class ProductModel {
   final int id;
   final dynamic price;
   final dynamic oldPrice;
   final int? discount;
-  final String image;
+  final String imageStr;
   final String name;
   final String description;
   final List<dynamic> images;
@@ -15,7 +17,7 @@ class ProductModel {
     required this.price,
     required this.oldPrice,
     required this.discount,
-    required this.image,
+    required this.imageStr,
     required this.name,
     required this.description,
     required this.images,
@@ -24,12 +26,13 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson({required Map<String, dynamic> product}) {
+
     return ProductModel(
       id: product['id'],
       price: product['price'],
       oldPrice: product['old_price'],
       discount: product['discount'] ?? 0,
-      image: product['image'],
+      imageStr: product['image'],
       name: product['name'],
       description: product['description'],
       images: product['images'],

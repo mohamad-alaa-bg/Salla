@@ -66,7 +66,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
               favoritesProduceList?.add(FavoritesProductsModel(
                   id: event.productModel.id,
                   name: event.productModel.name,
-                  image: event.productModel.image,
+                  imageStr: event.productModel.imageStr,
                   price: event.productModel.price,
                   oldPrice: event.productModel.oldPrice,
                   discount: event.productModel.discount??0,
@@ -83,7 +83,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
                 favoritesProduceList?.add(FavoritesProductsModel(
                     id: event.productModel.id,
                     name: event.productModel.name,
-                    image: event.productModel.image,
+                    imageStr: event.productModel.imageStr,
                     price: event.productModel.price,
                     oldPrice: event.productModel.oldPrice,
                     discount: event.productModel.discount??0,

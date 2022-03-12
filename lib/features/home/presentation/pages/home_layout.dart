@@ -11,7 +11,7 @@ class HomeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeBloc bloc = sl();
+    var bloc = HomeBloc.get(context);
     return BlocBuilder<CategoriesBloc, CategoriesState>(
       builder: (context, state) {
         return BlocBuilder<HomeBloc, HomeState>(
@@ -19,9 +19,9 @@ class HomeLayout extends StatelessWidget {
           builder: (context, state) {
             return BlocConsumer<SettingsBloc, SettingsState>(
               listener: (context, state) {
-                if(state is ChangeLanguageSuccessState){
-                  bloc.add(GetHomePageDataEvent());
-                }
+                // if(state is ChangeLanguageSuccessState){
+                //   bloc.add(GetHomePageDataEvent());
+                // }
               },
               builder: (context, state) {
                 return Scaffold(
