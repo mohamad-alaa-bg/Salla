@@ -15,8 +15,8 @@ class CategoriesRepoImp extends CategoriesRepo{
   }
 
   @override
-  Future<CategoryDetailsModel> getCategoryDetails({required int id}) async{
-    return await remoteCategoriesDataSourceImp.getCategoryDetails(id: id);
+  Future<CategoryDetailsModel> getCategoryDetails({required int id,required Language lang}) async{
+    return await remoteCategoriesDataSourceImp.getCategoryDetails(id: id,lang: lang);
   }
 
 

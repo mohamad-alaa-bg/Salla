@@ -10,41 +10,59 @@ import 'package:salla/features/categories/data/models/categories_model.dart';
 import 'package:salla/features/categories/domain/repositories/categories_repo.dart';
 
 part 'categories_event.dart';
+
 part 'categories_state.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   final CategoriesRepo categoriesRepo;
+
   CategoriesBloc({required this.categoriesRepo}) : super(CategoriesInitial()) {
     print('create categories bloc');
-    on<CategoriesEvent>((event, emit) async{
-      if(event is GetCategoriesEvent){
+    on<CategoriesEvent>((event, emit) async {
+      if (event is GetCategoriesEvent) {
         emit(CategoriesIsLoadingState());
-        try{
-         categoriesData = await categoriesRepo.getCategories(UserData.language);
-         if(UserData.language == Language.english){
-           categoriesDataEn = categoriesData;
-         }else{
-           categoriesDataAr = categoriesData;
-         }
-         emit(CategoriesSuccessState(categoriesModel: categoriesData));
-         if(UserData.language == Language.english){
-           categoriesData = await categoriesRepo.getCategories(Language.arabic);
-           categoriesDataAr = categoriesData;
-
-         }else{
-           categoriesData = await categoriesRepo.getCategories(Language.english);
-           categoriesDataEn = categoriesData;
-         }
-        }catch(error){
+        try {
+          categoriesData =
+              await categoriesRepo.getCategories(UserData.language);
+          if (UserData.language == Language.english) {
+            categoriesDataEn = categoriesData;
+          } else {
+            categoriesDataAr = categoriesData;
+          }
+          emit(CategoriesSuccessState(categoriesModel: categoriesData));
+          if (UserData.language == Language.english) {
+            categoriesData =
+                await categoriesRepo.getCategories(Language.arabic);
+            categoriesDataAr = categoriesData;
+          } else {
+            categoriesData =
+                await categoriesRepo.getCategories(Language.english);
+            categoriesDataEn = categoriesData;
+          }
+        } catch (error) {
           emit(CategoriesErrorState());
         }
-      }else if(event is GetCategoryDetailsEvent){
+      } else if (event is GetCategoryDetailsEvent) {
         emit(CategoryDetailsIsLoadingState());
-        try{
-          categoryDetails = await categoriesRepo.getCategoryDetails(id: event.id);
-          print(categoryDetails!.products.length);
+        try {
+          categoryDetails = await categoriesRepo.getCategoryDetails(
+              id: event.id, lang: UserData.language);
+          if (UserData.language == Language.english) {
+            categoryDetailsEn = categoryDetails;
+          } else {
+            categoryDetailsAr = categoryDetails;
+          }
           emit(CategoryDetailsSuccessState(categoryDetails: categoryDetails));
-        }catch(error){
+          if (UserData.language == Language.english) {
+            categoryDetails = await categoriesRepo.getCategoryDetails(
+                id: event.id, lang: Language.arabic);
+            categoryDetailsAr = categoryDetails;
+          } else {
+            categoryDetails = await categoriesRepo.getCategoryDetails(
+                id: event.id, lang: Language.english);
+            categoryDetailsEn = categoryDetails;
+          }
+        } catch (error) {
           print(error);
           emit(CategoryDetailsErrorState());
         }
@@ -54,9 +72,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     });
   }
 
-   CategoriesModel? categoriesData;
-   CategoriesModel? categoriesDataEn;
-   CategoriesModel? categoriesDataAr;
-   CategoryDetailsModel? categoryDetails;
+  CategoriesModel? categoriesData;
+  CategoriesModel? categoriesDataEn;
+  CategoriesModel? categoriesDataAr;
+  CategoryDetailsModel? categoryDetails;
+  CategoryDetailsModel? categoryDetailsEn;
+  CategoryDetailsModel? categoryDetailsAr;
+
   static CategoriesBloc get(context) => BlocProvider.of(context);
 }

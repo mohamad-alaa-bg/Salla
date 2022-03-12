@@ -137,6 +137,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       BottomNavigationBarItem(
           icon: const Icon(Icons.home),
           label: UserData.language == Language.english ? 'Home' : 'الرئيسية'),
+
+
       BottomNavigationBarItem(
           icon: const Icon(Icons.grid_view),
           label: UserData.language == Language.english

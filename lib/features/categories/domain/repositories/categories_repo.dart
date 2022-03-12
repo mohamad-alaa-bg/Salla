@@ -4,5 +4,5 @@ import 'package:salla/features/categories/data/models/category_details.dart';
 
 abstract class CategoriesRepo{
   Future<CategoriesModel> getCategories(Language lang);
-  Future<CategoryDetailsModel> getCategoryDetails({required int id});
+  Future<CategoryDetailsModel> getCategoryDetails({required int id,required Language lang});
 }

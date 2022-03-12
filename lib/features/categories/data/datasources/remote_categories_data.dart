@@ -8,7 +8,7 @@ import 'package:salla/features/categories/data/models/category_details.dart';
 abstract class RemoteCategoriesDataSource {
   Future<CategoriesModel> getCategories(Language lang);
 
-  Future<CategoryDetailsModel> getCategoryDetails({required int id});
+  Future<CategoryDetailsModel> getCategoryDetails({required int id,required Language lang});
 }
 
 class RemoteCategoriesDataSourceImp extends RemoteCategoriesDataSource {
@@ -25,9 +25,9 @@ class RemoteCategoriesDataSourceImp extends RemoteCategoriesDataSource {
   }
 
   @override
-  Future<CategoryDetailsModel> getCategoryDetails({required int id}) async {
+  Future<CategoryDetailsModel> getCategoryDetails({required int id, required Language lang}) async {
     String url = EndPoints.categories + '/$id';
-    Response response = await DioHelper.getData(url: url);
+    Response response = await DioHelper.getData(url: url,lang: lang == Language.english ? 'en' : 'ar');
     return CategoryDetailsModel.fromJson(response);
   }
 }
