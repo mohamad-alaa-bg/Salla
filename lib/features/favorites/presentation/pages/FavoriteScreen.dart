@@ -5,10 +5,7 @@ import 'package:salla/core/util/enum.dart';
 
 import 'package:salla/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:salla/features/home/presentation/widgets/product_grid_view.dart';
-import 'package:salla/features/settings/presentation/bloc/settings_bloc.dart';
-import 'package:salla/features/settings/presentation/bloc/settings_bloc.dart';
 
-import '../../../../injection.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
