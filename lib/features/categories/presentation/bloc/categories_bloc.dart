@@ -5,20 +5,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:salla/features/categories/data/models/category_details.dart';
 import 'package:salla/features/categories/data/models/categories_model.dart';
-import 'package:salla/features/categories/data/repositories/categories_repo_imp.dart';
+import 'package:salla/features/categories/domain/repositories/categories_repo.dart';
 
 part 'categories_event.dart';
 part 'categories_state.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
-  final CategoriesRepoImp categoriesRepoImp;
-  CategoriesBloc({required this.categoriesRepoImp}) : super(CategoriesInitial()) {
+  final CategoriesRepo categoriesRepo;
+  CategoriesBloc({required this.categoriesRepo}) : super(CategoriesInitial()) {
     print('create categories bloc');
     on<CategoriesEvent>((event, emit) async{
       if(event is GetCategoriesEvent){
         emit(CategoriesIsLoadingState());
         try{
-         categoriesData = await categoriesRepoImp.getCategories();
+         categoriesData = await categoriesRepo.getCategories();
          emit(CategoriesSuccessState(categoriesModel: categoriesData));
         }catch(error){
           emit(CategoriesErrorState());
@@ -26,7 +26,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
       }else if(event is GetCategoryDetailsEvent){
         emit(CategoryDetailsIsLoadingState());
         try{
-          categoryDetails = await categoriesRepoImp.getCategoryDetails(id: event.id);
+          categoryDetails = await categoriesRepo.getCategoryDetails(id: event.id);
           print(categoryDetails!.products.length);
           emit(CategoryDetailsSuccessState(categoryDetails: categoryDetails));
         }catch(error){

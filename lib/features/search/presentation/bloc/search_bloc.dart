@@ -4,21 +4,21 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:salla/features/search/data/models/search_model.dart';
-import 'package:salla/features/search/data/repositories/search_repo_impl.dart';
+import 'package:salla/features/search/domain/repositories/search_repo.dart';
 
 part 'search_event.dart';
 
 part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final SearchRepoImpl searchRepoImpl;
+  final SearchRepo searchRepo;
 
-  SearchBloc({required this.searchRepoImpl}) : super(SearchInitial()) {
+  SearchBloc({required this.searchRepo}) : super(SearchInitial()) {
     on<SearchEvent>((event, emit) async {
       if (event is SearchProductsEvent) {
         try {
           emit(SearchIsLoadingState());
-          SearchModel searchModel = await searchRepoImpl.search(event.text);
+          SearchModel searchModel = await searchRepo.search(event.text);
           print(searchModel.status);
           if (searchModel.status) {
             emit(SearchLoadedSuccessState(searchProduct: searchModel));

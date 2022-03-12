@@ -8,23 +8,24 @@ import 'package:salla/core/data/local_data_source/shared_preferences.dart';
 import 'package:salla/core/util/constants.dart';
 import 'package:salla/features/login/data/models/shop_login_model.dart';
 import 'package:salla/features/login/data/repositories/shop_login_repo_imp.dart';
+import 'package:salla/features/login/domain/repositories/shop_login_repo.dart';
 
 part 'shop_login_event.dart';
 
 part 'shop_login_state.dart';
 
 class ShopLoginBloc extends Bloc<ShopLoginEvent, ShopLoginState> {
-  final ShopLoginRepoImp shopLoginRepoImp;
+  final ShopLoginRepo shopLoginRepo;
   bool obscurePassword = true;
   Widget suffixIcon = const Icon(Icons.visibility_outlined);
 
-  ShopLoginBloc({required this.shopLoginRepoImp}) : super(ShopLoginInitial()) {
+  ShopLoginBloc({required this.shopLoginRepo}) : super(ShopLoginInitial()) {
     on((event, emit) async {
       if (event is ShopUserLoginEvent) {
         emit(ShopLoginLoadingState());
         try {
           ShopLoginModel loginResponse =
-          await shopLoginRepoImp.userLogin(url: EndPoints.login, data: {
+          await shopLoginRepo.userLogin(url: EndPoints.login, data: {
             'email': event.email,
             'password': event.password,
           });
@@ -50,7 +51,7 @@ class ShopLoginBloc extends Bloc<ShopLoginEvent, ShopLoginState> {
         emit(ShopLoginLoadingState());
         try {
           ShopLoginModel loginResponse =
-          await shopLoginRepoImp.userRegister(name: event.name.toString(),
+          await shopLoginRepo.userRegister(name: event.name.toString(),
               email: event.email.toString(),
               password: event.password.toString(),
               phone: "0974056564");

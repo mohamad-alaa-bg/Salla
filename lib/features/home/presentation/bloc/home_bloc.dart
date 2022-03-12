@@ -19,9 +19,9 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomePageRepo homePageRepoImp;
+  HomePageRepo homePageRepo;
 
-  HomeBloc({required this.homePageRepoImp}) : super(HomeInitial()) {
+  HomeBloc({required this.homePageRepo}) : super(HomeInitial()) {
     on<HomeEvent>((event, emit) async {
       if (event is ChangeBottomBarItemEvent) {
         bottomNavigatorIndex = event.index;
@@ -31,7 +31,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         homeData = null;
         emit(HomePageDataIsLoading());
         try {
-          homeData = await homePageRepoImp.getHomeData();
+          homeData = await homePageRepo.getHomeData();
           for (var e in homeData!.data.products) {}
           emit(HomePageDataSuccess(homeData: homeData));
         } catch (error) {

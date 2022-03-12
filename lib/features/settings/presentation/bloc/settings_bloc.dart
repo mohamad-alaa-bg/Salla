@@ -6,20 +6,21 @@ import 'package:salla/core/util/constants.dart';
 import 'package:salla/core/util/enum.dart';
 import 'package:salla/features/settings/data/models/settings_model.dart';
 import 'package:salla/features/settings/data/repositories/settings_repo_imp.dart';
+import 'package:salla/features/settings/domain/repositories/settings_repo.dart';
 
 part 'settings_event.dart';
 
 part 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
-  final SettingsRepoImp settingsRepoImp;
+  final SettingsRepo settingsRepo;
 
-  SettingsBloc({required this.settingsRepoImp}) : super(SettingsInitial()) {
+  SettingsBloc({required this.settingsRepo}) : super(SettingsInitial()) {
     on<SettingsEvent>((event, emit) async {
       if (event is GetSettingsEvent) {
         emit(SettingsIsLoadingState());
         try {
-          SettingsModel settingsModel = await settingsRepoImp.getSetting();
+          SettingsModel settingsModel = await settingsRepo.getSetting();
           settings = settingsModel;
           emit(SettingsLoadedState());
         } catch (error) {
@@ -66,7 +67,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       if (event is UpdateProfileEvent) {
         emit(UpdateProfileIsLoadingState());
         try {
-          SettingsModel settingsModel = await settingsRepoImp.updateSetting(
+          SettingsModel settingsModel = await settingsRepo.updateSetting(
               event.name, event.email, event.phoneNum);
           if (settingsModel.status) {
             settings = settingsModel;

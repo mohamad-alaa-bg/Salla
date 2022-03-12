@@ -48,11 +48,7 @@ void main() async {
   BlocOverrides.runZoned(
     () {
       runApp(
-        BlocProvider(
-          create: (context) => SettingsBloc(settingsRepoImp: SettingsRepoImp())
-            ..add(GetSettingsEvent()),
-          child: MyApp(startingWidget: startingWidget),
-        ),
+        MyApp(startingWidget: startingWidget),
       );
     },
     blocObserver: MyBlocObserver(),
@@ -68,24 +64,23 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SearchBloc(searchRepoImpl: SearchRepoImpl()),
+          create: (context) => sl<SettingsBloc>()..add(GetSettingsEvent()),
         ),
         BlocProvider(
-          create: (context) =>
-              ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp()),
+          create: (context) => SearchBloc(searchRepo: SearchRepoImpl()),
         ),
-        BlocProvider(
-          create: (context) =>
-              CategoriesBloc(categoriesRepoImp: CategoriesRepoImp())
-                ..add(GetCategoriesEvent()),
+        BlocProvider<ShopLoginBloc>(
+          create: (context) => sl(),
+        ),
+        BlocProvider<CategoriesBloc>(
+          create: (context) => sl()..add(GetCategoriesEvent()),
         ),
         BlocProvider<HomeBloc>(
-          create: (context) => sl()
-            ..add(GetHomePageDataEvent()),
+          create: (context) => sl()..add(GetHomePageDataEvent()),
         ),
         BlocProvider(
           create: (context) =>
-              FavoritesBloc(favoritesRepoImp: FavoritesRepoImp())
+              FavoritesBloc(favoritesRepo: FavoritesRepoImp())
                 ..add(GetFavoritesEvent()),
         ),
       ],

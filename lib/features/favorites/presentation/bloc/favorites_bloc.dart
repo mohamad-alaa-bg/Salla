@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:salla/features/favorites/data/models/favorites_data_products_model.dart';
-import 'package:salla/features/favorites/data/repositories/favorites_repo_impl.dart';
 import 'package:salla/features/favorites/data/models/favorite_change_state.dart';
+import 'package:salla/features/favorites/domain/repositories/favorite_repo.dart';
 import 'package:salla/features/home/data/models/product_model.dart';
 
 part 'favorites_event.dart';
@@ -14,12 +14,12 @@ part 'favorites_event.dart';
 part 'favorites_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
-  final FavoritesRepoImp favoritesRepoImp;
+  final FavoritesRepo favoritesRepo;
 
-  FavoritesBloc({required this.favoritesRepoImp}) : super(FavoritesInitial()) {
+  FavoritesBloc({required this.favoritesRepo}) : super(FavoritesInitial()) {
     on<FavoritesEvent>((event, emit) async {
       if (event is GetFavoritesEvent) {
-        await favoritesRepoImp.getFavorites().then((value) {
+        await favoritesRepo.getFavorites().then((value) {
           favoritesProduceList = value.products ?? [];
           favoritesProduceListSaved = value.products ?? [];
           for (var e in value.products ?? []) {
@@ -56,7 +56,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
         emit(FavoriteChangeSuccess());
         try {
-          FavoriteStateModel favoriteState = await favoritesRepoImp
+          FavoriteStateModel favoriteState = await favoritesRepo
               .changeProductFavoriteState(event.productId);
           if (favoriteState.status == false) {
             // if(saveProduct !=null) {

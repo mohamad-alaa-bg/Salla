@@ -23,7 +23,7 @@ class _ShopLoginHomeState extends State<ShopLoginHome> {
   TextEditingController passwordController = TextEditingController();
   var loginFormKey = GlobalKey<FormState>();
   ShopLoginBloc shopLoginBloc =
-      ShopLoginBloc(shopLoginRepoImp: ShopLoginRepoImp());
+      ShopLoginBloc(shopLoginRepo: ShopLoginRepoImp());
 
   void login() {
     if (loginFormKey.currentState!.validate()) {
