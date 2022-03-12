@@ -15,10 +15,10 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var categoriesBloc = CategoriesBloc.get(context);
     var bloc = HomeBloc.get(context);
-    int indexC = 0;
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        return (bloc.homeData == null) || (categoriesBloc.categoriesData == null)
+        return (bloc.homeData == null) ||
+                (categoriesBloc.categoriesData == null)
             ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -31,15 +31,14 @@ class ProductsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          const SizedBox(
                             width: double.infinity,
-                            child: const Text(
+                            child: Text(
                               'Categories',
                               style: TextStyle(
                                 fontSize: 20,
@@ -51,13 +50,16 @@ class ProductsScreen extends StatelessWidget {
                             height: 10,
                           ),
                           CategoriesListBuilder(
-                              categoriesData: categoriesBloc.categoriesData),
+                              categoriesData:
+                                  UserData.language == Language.english
+                                      ? categoriesBloc.categoriesDataEn
+                                      : categoriesBloc.categoriesDataAr),
                           const SizedBox(
                             height: 20,
                           ),
                           const SizedBox(
                             width: double.infinity,
-                            child:  Text(
+                            child: Text(
                               'New Products',
                               style: TextStyle(
                                 fontSize: 20,
@@ -74,7 +76,10 @@ class ProductsScreen extends StatelessWidget {
                     SizedBox(
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: ProductGridView(products:UserData.language == Language.english ? bloc.homeDataEn!.data.products :bloc.homeDataAr!.data.products ),
+                        child: ProductGridView(
+                            products: UserData.language == Language.english
+                                ? bloc.homeDataEn!.data.products
+                                : bloc.homeDataAr!.data.products),
                       ),
                     ),
                   ],

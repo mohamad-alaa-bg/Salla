@@ -62,7 +62,11 @@ class CategoriesListVerticalBuilder extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      categoriesBloc.categoriesData!.categories[index].name,
+                      UserData.language == Language.english
+                          ? categoriesBloc
+                              .categoriesDataEn!.categories[index].name
+                          : categoriesBloc
+                              .categoriesDataAr!.categories[index].name,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
