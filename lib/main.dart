@@ -63,6 +63,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<ShopLoginBloc>(
+          create: (context) => sl(),
+        ),
+        BlocProvider<HomeBloc>(
+          create: (context) => sl()..add(GetHomePageDataEvent()),
+        ),
+        BlocProvider<CategoriesBloc>(
+          create: (context) => sl()..add(GetCategoriesEvent()),
+        ),
         BlocProvider(
           create: (context) => sl<FavoritesBloc>()..add(GetFavoritesEvent()),
         ),
@@ -72,15 +81,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SearchBloc(searchRepo: SearchRepoImpl()),
         ),
-        BlocProvider<ShopLoginBloc>(
-          create: (context) => sl(),
-        ),
-        BlocProvider<CategoriesBloc>(
-          create: (context) => sl()..add(GetCategoriesEvent()),
-        ),
-        BlocProvider<HomeBloc>(
-          create: (context) => sl()..add(GetHomePageDataEvent()),
-        ),
+
+
+
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
