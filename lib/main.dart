@@ -48,7 +48,10 @@ void main() async {
   BlocOverrides.runZoned(
     () {
       runApp(
-        MyApp(startingWidget: startingWidget),
+        BlocProvider(
+          create: (context) => sl<SettingsBloc>()..add(GetSettingsEvent()),
+          child: MyApp(startingWidget: startingWidget),
+        ),
       );
     },
     blocObserver: MyBlocObserver(),
@@ -76,14 +79,8 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<FavoritesBloc>()..add(GetFavoritesEvent()),
         ),
         BlocProvider(
-          create: (context) => sl<SettingsBloc>()..add(GetSettingsEvent()),
-        ),
-        BlocProvider(
           create: (context) => SearchBloc(searchRepo: SearchRepoImpl()),
         ),
-
-
-
       ],
       child: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (context, state) {
